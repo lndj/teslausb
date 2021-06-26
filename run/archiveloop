@@ -716,12 +716,13 @@ function set_time () {
   do
     if sntp -S ${NTP_SERVER-"ntp.aliyun.com"}
     then
+      log "sntp using ${NTP_SERVER-"ntp.aliyun.com"}...."
       local -r uptime_end=$(awk '{print $1}' /proc/uptime)
       local -r clocktime_end=$(date +%s.%N)
       log "$(awk "BEGIN {printf \"Time adjusted by %f seconds after %f seconds\", $clocktime_end-$clocktime_start, $uptime_end-$uptime_start}")"
       return
     fi
-    log "sntp failed, retrying...."
+    log "sntp failed, retrying....[${NTP_SERVER-"ntp.aliyun.com"}]"
     sleep 2
   done
   log "Failed to set time"
