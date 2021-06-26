@@ -224,8 +224,12 @@ export WIFIPASS='your_pass'
 #export CPU_GOVERNOR=conservative
 
 # Uncomment and change if you want setup scripts to be pulled
-# from a different repo than github.com/marcone/teslausb
-# export REPO=marcone
+# from a different repo than github.com/lndj/teslausb
+# export REPO=lndj
 
 # Uncomment and change if you want a different branch than main-dev
 # export BRANCH=main-dev
+
+# Uncomment and change if you want a different ntp server to set time
+# The default ntp server is ntp.aliyun.com
+# export NTP_SERVER=ntp.aliyun.com

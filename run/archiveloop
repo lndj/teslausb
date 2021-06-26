@@ -714,14 +714,14 @@ function set_time () {
   local -r clocktime_start=$(date +%s.%N)
   for _ in {1..5}
   do
-    if sntp -S time.google.com
+    if sntp -S ${NTP_SERVER-"ntp.aliyun.com"}
     then
       local -r uptime_end=$(awk '{print $1}' /proc/uptime)
       local -r clocktime_end=$(date +%s.%N)
       log "$(awk "BEGIN {printf \"Time adjusted by %f seconds after %f seconds\", $clocktime_end-$clocktime_start, $uptime_end-$uptime_start}")"
       return
     fi
-    log "sntp failed, retrying..."
+    log "sntp failed, retrying...."
     sleep 2
   done
   log "Failed to set time"
