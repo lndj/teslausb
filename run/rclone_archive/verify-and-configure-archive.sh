@@ -9,6 +9,10 @@ function log_progress () {
   echo "verify-and-configure-archive: $1"
 }
 
+# todo: install rclone && config it
+# Maybe we should have a supported service provider list
+# like: oss(Ali OSS) / cos(Tencent cloud) / s3 ...
+
 function verify_configuration () {
     log_progress "Verifying rclone configuration..."
     if ! [ -e "/root/.config/rclone/rclone.conf" ]

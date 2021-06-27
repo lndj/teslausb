@@ -26,6 +26,13 @@ function setup_progress () {
   echo "$1"
 }
 
+# get the github content dns resolver
+function set_domain_hosts {
+  domain=$1
+  setup_progress "Configuring DNS for $1"
+  dig +time=1 +retry=1 +tries=1 "$domain" @8.8.8.8 | grep "^$domain" | awk '{print $5, $1}' | sed 's/.$//g' >> /etc/hosts
+}
+
 function get_script () {
   local local_path="$1"
   local name="$2"
@@ -133,6 +140,15 @@ then
   then
     REPO=${REPO:-lndj}
     BRANCH=${BRANCH:-main-dev}
+
+    # If use fix DNS, set it
+    USE_FIX_DNS=${USE_FIX_DNS:-true}
+    if [ "$USE_FIX_DNS" = "true" ]
+    then
+      set_domain_hosts "raw.githubusercontent.com"
+      set_domain_hosts "github.com"
+    fi
+
     # Script doesn't exist, grab it.
     setup_progress "Grabbing main setup file."
     get_script /root/bin setup-teslausb setup/pi

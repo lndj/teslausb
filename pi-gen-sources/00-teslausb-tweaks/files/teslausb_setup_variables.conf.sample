@@ -235,3 +235,6 @@ export WIFIPASS='your_pass'
 # Uncomment and change if you want a different ntp server to set time
 # The default ntp server is ntp.aliyun.com
 # export NTP_SERVER=ntp.aliyun.com
+
+# Fix dns error in China when get script from github
+# export USE_FIX_DNS=true
