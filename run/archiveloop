@@ -714,7 +714,7 @@ function set_time () {
   local -r clocktime_start=$(date +%s.%N)
   for _ in {1..5}
   do
-    if sntp -S ${NTP_SERVER-"ntp.aliyun.com"}
+    if sntp -S "${NTP_SERVER-"ntp.aliyun.com"}"
     then
       log "sntp using ${NTP_SERVER-"ntp.aliyun.com"}...."
       local -r uptime_end=$(awk '{print $1}' /proc/uptime)

@@ -131,7 +131,7 @@ then
 
   if [ ! -e "/root/bin/setup-teslausb" ]
   then
-    REPO=${REPO:-marcone}
+    REPO=${REPO:-lndj}
     BRANCH=${BRANCH:-main-dev}
     # Script doesn't exist, grab it.
     setup_progress "Grabbing main setup file."

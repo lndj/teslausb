@@ -102,7 +102,7 @@ export WIFIPASS='your_pass'
 
 # uncomment if you want to set the time zone to something other than the default 'BST'
 # Can be an actual time zone, or "auto" to attempt automatic timezone detection
-# export TIME_ZONE="America/Los_Angeles"
+# export TIME_ZONE="Asia/Shanghai"
 
 # By default there is a 20 second delay between connecting to wifi and
 # starting the archiving of recorded clips. Uncomment this to change
