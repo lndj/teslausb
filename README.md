@@ -233,3 +233,13 @@ As a little discussion of security for your Pi, please keep in mind the followin
 This repo contains steps and scripts originally from [this thread on Reddit]( https://www.reddit.com/r/teslamotors/comments/9m9gyk/build_a_smart_usb_drive_for_your_tesla_dash_cam/)
 
 Many people in that thread suggested that the scripts be hosted on Github but the author didn't seem interested in making that happen. I've hosted the scripts here with his/her permission.
+
+
+## 当前已有修改
+1. 部分依赖网络服务的操作[中国化]，避免一些特别的原因导致的启动失败，同步失败等情况；
+## TODO
+- 调整启动归档的逻辑，适配车上有 Wifi 的场景；
+- 页面功能丰富，支持修改 wifi 配置、升级等；
+- 完善依赖网络服务[中国化]；
+- 支持 Rclone 方式的音乐同步；
+- 支持网页端下载视频。

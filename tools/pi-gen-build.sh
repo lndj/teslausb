@@ -14,7 +14,7 @@ qemu-utils kpartx screen -y
 
 cd /root
 
-git clone https://github.com/marcone/teslausb.git
+git clone https://github.com/lndj/teslausb.git
 git clone https://github.com/RPi-Distro/pi-gen.git
 
 # Gen pi-gen config file
