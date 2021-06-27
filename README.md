@@ -237,6 +237,7 @@ Many people in that thread suggested that the scripts be hosted on Github but th
 
 ## 当前已有修改
 1. 部分依赖网络服务的操作[中国化]，避免一些特别的原因导致的启动失败，同步失败等情况；
+2. 增加镜像制作脚本；
 ## TODO
 - 调整启动归档的逻辑，适配车上有 Wifi 的场景；
 - 页面功能丰富，支持修改 wifi 配置、升级等；
