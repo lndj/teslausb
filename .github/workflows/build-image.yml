@@ -5,10 +5,12 @@ name: CI
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the main-dev branch
-  push:
-    branches: [ main-dev ]
-  pull_request:
-    branches: [ main-dev ]
+  # push:
+  #   branches: [ main-dev ]
+  page_build:
+  release:
+    types: # This configuration does not affect the page_build event above
+      - created
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -59,10 +61,10 @@ jobs:
       - name: Deploy
         run: |
           cd pi-gen && sudo bash build.sh
-          ls deploy
+          ls deploy && cat deploy/**.teslausb-lite.info
           
       - name: Upload build image zip
         uses: actions/upload-artifact@v2
         with:
           name: teslausb-image
-          path: pi-gen/image_**-teslausb-lite.zip
+          path: pi-gen/deploy/image_**-teslausb-lite.zip
