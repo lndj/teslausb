@@ -35,7 +35,7 @@ jobs:
       # Intstall dependences
       - name: Run a one-line script
         run: |
-          apt-get -y --force-yes install coreutils quilt parted qemu-user-static debootstrap zerofree zip
+          sudo apt-get -y --force-yes install coreutils quilt parted qemu-user-static debootstrap zerofree zip
           dosfstools libarchive-tools libcap2-bin grep rsync xz-utils file git curl bc
           qemu-utils kpartx 
 
