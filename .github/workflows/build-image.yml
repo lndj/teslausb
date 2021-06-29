@@ -34,15 +34,26 @@ jobs:
       - name: Show env info
         run: whoami && pwd && ls -la && ls -la pi-gen
 
-      # Intstall dependences
-      - name: Run a one-line script
+      - name: Install dependences
         run: |
           sudo  apt-get update && sudo apt-get -y install coreutils quilt parted qemu-user-static debootstrap zerofree zip \
           dosfstools libarchive-tools libcap2-bin grep rsync xz-utils file git curl bc \
           qemu-utils kpartx 
 
-      # Deploy
-      - name: Deploy
+      - name: Prepare pi-gen config
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          cd pi-gen
+          cat <<- EOF > config
+          IMG_NAME=teslausb
+          HOSTNAME=teslausb
+          STAGE_LIST="stage0 stage1 stage2 stage_teslausb"
+          EOF
+          rm -rf stage2/EXPORT_NOOBS
+          mkdir stage_teslausb
+          touch stage_teslausb/EXPORT_IMAGE
+          cp stage2/prerun.sh stage_teslausb/prerun.sh
+          cp -R ../pi-gen-sources/00-teslausb-tweaks ./stage_teslausb
+          sed -i -e "s/200 \* 1024 \* 1024/400 \* 1024 \* 1024/g" export-image/prerun.sh
+
+      - name: Deploy
+        run: sudo ./build.sh
