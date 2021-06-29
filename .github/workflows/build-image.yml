@@ -57,4 +57,12 @@ jobs:
           ls -la stage_teslausb && cat config
 
       - name: Deploy
-        run: cd pi-gen && sudo bash build.sh
+        run: |
+          cd pi-gen && sudo bash build.sh
+          ls deploy
+          
+      - name: Upload build image zip
+        uses: actions/upload-artifact@v2
+        with:
+          name: teslausb-image
+          path: pi-gen/image_**-teslausb-lite.zip
