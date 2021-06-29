@@ -61,7 +61,7 @@ jobs:
       - name: Deploy
         run: |
           cd pi-gen && sudo bash build.sh
-          ls deploy && cat deploy/**.teslausb-lite.info
+          ls deploy && cat deploy/**-teslausb-lite.info
           
       - name: Upload build image zip
         uses: actions/upload-artifact@v2
