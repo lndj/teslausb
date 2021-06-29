@@ -6,9 +6,9 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the main-dev branch
   push:
-    branches: [ feature ]
+    branches: [ main-dev ]
   pull_request:
-    branches: [ feature ]
+    branches: [ main-dev ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -22,19 +22,17 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-      
+      - name: Checkout
+        uses: actions/checkout@v2
 
-      - name: Cd work dir
-        run: pwd && ls -la && cd .. && ls -la
-
-      - name: Checkout pi-gen
+      - name: Checkout tools repo
         uses: actions/checkout@v2
         with:
           repository: RPi-Distro/pi-gen
+          path: pi-gen
+     
       - name: Show env info
-        run: whoami && pwd && ls -la && cd .. && ls -la
+        run: whoami && pwd && ls -la && ls -la pi-gen
 
       # Intstall dependences
       - name: Run a one-line script
