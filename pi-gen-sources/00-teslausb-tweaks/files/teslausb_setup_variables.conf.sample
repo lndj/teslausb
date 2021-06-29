@@ -240,5 +240,5 @@ export WIFIPASS='your_pass'
 # The default ntp server is ntp.aliyun.com
 # export NTP_SERVER=ntp.aliyun.com
 
-# Fix dns error in China when get script from github
-# export USE_FIX_DNS=true
+# Fix dns error in China when getting script from github
+# export FIX_DNS_CACHE_POISONING=true

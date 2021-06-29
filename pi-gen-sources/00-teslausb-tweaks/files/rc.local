@@ -30,7 +30,7 @@ function setup_progress () {
 function set_domain_hosts {
   domain=$1
   setup_progress "Configuring DNS for $1"
-  dig +time=1 +retry=1 +tries=1 "$domain" @8.8.8.8 | grep "^$domain" | awk '{print $5, $1}' | sed 's/.$//g' >> /etc/hosts
+  dig +time=2 +retry=1 +tries=2 "$domain" @8.8.8.8 | grep "^$domain" | awk '{print $5, $1}' | sed 's/.$//g' >> /etc/hosts
 }
 
 function get_script () {
@@ -142,8 +142,8 @@ then
     BRANCH=${BRANCH:-main-dev}
 
     # If use fix DNS, set it
-    USE_FIX_DNS=${USE_FIX_DNS:-true}
-    if [ "$USE_FIX_DNS" = "true" ]
+    FIX_DNS_CACHE_POISONING=${FIX_DNS_CACHE_POISONING:-true}
+    if [ "$FIX_DNS_CACHE_POISONING" = "true" ]
     then
       set_domain_hosts "raw.githubusercontent.com"
       set_domain_hosts "github.com"
