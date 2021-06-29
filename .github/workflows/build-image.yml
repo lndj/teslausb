@@ -54,7 +54,7 @@ jobs:
           cp stage2/prerun.sh stage_teslausb/prerun.sh
           cp -R ../pi-gen-sources/00-teslausb-tweaks ./stage_teslausb
           sed -i -e "s/200 \* 1024 \* 1024/400 \* 1024 \* 1024/g" export-image/prerun.sh
-          ls -la
+          ls -la stage_teslausb && cat config
 
       - name: Deploy
-        run: sudo bash pi-gen/build.sh
+        run: cd pi-gen && sudo bash build.sh
