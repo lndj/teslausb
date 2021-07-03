@@ -381,6 +381,23 @@ function check_telegram_configuration () {
   fi
 }
 
+function check_bark_configuration () {
+  if [ "${BARK_ENABLED:-false}" = "true" ]
+  then
+    if [ -z "${BARK_TOKEN:+x}" ]
+    then
+      echo "STOP: You're trying to setup Bark but didn't provide your token."
+      echo "Define the variables like this:"
+      echo "export BARK_TOKEN=put_your_token_here"
+      exit 1
+    elif [ "${BARK_TOKEN}" = "put_your_token_here" ]
+    then
+      echo "STOP: You're trying to setup Bark, but didn't replace the default values."
+      exit 1
+    fi
+  fi
+}
+
 function configure_pushover () {
   # remove legacy file
   rm -f /root/.teslaCamPushoverCredentials
@@ -477,6 +494,15 @@ function configure_sns () {
   fi
 }
 
+function configure_bark () {
+  if [ "${BARK_ENABLED:-false}" = "true" ]
+  then
+    log_progress "Bark enabled."
+  else
+    log_progress "Bark not enabled."
+  fi
+}
+
 function check_and_configure_pushover () {
   check_pushover_configuration
 
@@ -525,6 +551,12 @@ function check_and_configure_sns () {
   configure_sns
 }
 
+function check_and_configure_bark () {
+  check_bark_configuration
+
+  configure_bark
+}
+
 function install_push_message_scripts() {
   local install_path="$1"
   get_script "$install_path" send-push-message run
@@ -548,6 +580,7 @@ check_and_configure_slack
 check_and_configure_matrix
 check_and_configure_telegram
 check_and_configure_sns
+check_and_configure_bark
 install_push_message_scripts /root/bin
 
 check_archive_configs

@@ -158,7 +158,7 @@ export WIFIPASS='your_pass'
 
 # Uncomment if setting up Bark notifications
 # export BARK_ENABLED=true
-# export BARK_TOKEN=xxxxx
+# export BARK_TOKEN=put_your_token_here
 
 # tesla_dashcam / Trigger file support.
 # Uncomment any TRIGGER_FILE_xxxxx below to create trigger file(s) in the
