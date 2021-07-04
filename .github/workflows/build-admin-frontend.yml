@@ -31,9 +31,8 @@ jobs:
           tar -zcvf dist.tar.gz dist
           ls -la
 
-      # - name: Commit
-      #   run: |
-      #     cd teslausb-www/frontend
-      #     ls -la dist/
-      #     tar -zcvf dist.tar.gz dist
-      #     ls -la
+      - name: Commit & Push
+        uses: EndBug/add-and-commit@v7
+        with:
+          add: 'teslausb-www/frontend/dist.tar.gz'
+          author_name: Github Actions
