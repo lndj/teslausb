@@ -156,6 +156,10 @@ export WIFIPASS='your_pass'
 # export MATRIX_PASSWORD='put_your_matrix_password_here'
 # export MATRIX_ROOM='put_the_matrix_target_room_id_here'
 
+# Uncomment if setting up Bark notifications
+# export BARK_ENABLED=true
+# export BARK_TOKEN=put_your_token_here
+
 # tesla_dashcam / Trigger file support.
 # Uncomment any TRIGGER_FILE_xxxxx below to create trigger file(s) in the
 # archive directory for the listed clip type after all clips have been
@@ -235,3 +239,6 @@ export WIFIPASS='your_pass'
 # Uncomment and change if you want a different ntp server to set time
 # The default ntp server is ntp.aliyun.com
 # export NTP_SERVER=ntp.aliyun.com
+
+# Fix dns error in China when getting script from github
+# export FIX_DNS_CACHE_POISONING=true

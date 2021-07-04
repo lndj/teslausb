@@ -65,6 +65,11 @@ function send_slack () {
   curl -X POST --data-urlencode "payload=$payload" "$SLACK_WEBHOOK_URL"
 }
 
+function send_bark () {
+  log "Sending Bark message."
+  curl -X GET "https://api.day.app/$BARK_TOKEN/$title/$message?sound=calypso&isArchive=1&group=Teslausb"
+}
+
 log "$message"
 
 [ "${PUSHOVER_ENABLED:-false}" = "true" ] && send_pushover
@@ -75,5 +80,6 @@ log "$message"
 [ "${TELEGRAM_ENABLED:-false}" = "true" ] && send_telegram
 [ "${MATRIX_ENABLED:-false}" = "true" ] && send_matrix
 [ "${SLACK_ENABLED:-false}" = "true" ] && send_slack
+[ "${BARK_ENABLED:-false}" = "true" ] && send_bark
 
 exit 0
