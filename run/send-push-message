@@ -66,8 +66,8 @@ function send_slack () {
 }
 
 function send_bark () {
-  log "Sending Bard message."
-  curl -X GET "https://api.day.app/$BARK_TOKEN/$title/$message?sound=calypso&isArchive=1"
+  log "Sending Bark message."
+  curl -X GET "https://api.day.app/$BARK_TOKEN/$title/$message?sound=calypso&isArchive=1&group=Teslausb"
 }
 
 log "$message"
