@@ -28,6 +28,10 @@ mkdir /var/www/html/TeslaCam
 cp -rf "$SOURCE_DIR/teslausb-www/teslausb.nginx" /etc/nginx/sites-available
 ln -sf /etc/nginx/sites-available/teslausb.nginx /etc/nginx/sites-enabled/default
 
+# install the new admin frontend
+cp -rf "$SOURCE_DIR/teslausb-www/frontend/dist.tar.gz" /var/www/html
+tar -zxvf /var/www/html/dist.tar.gz
+
 # install the fuse layer needed to work around an incompatibility
 # between Chrome and Tesla's recordings
 g++ -o /root/cttseraser -D_FILE_OFFSET_BITS=64 "$SOURCE_DIR/teslausb-www/cttseraser.cpp" -lstdc++ -lfuse
