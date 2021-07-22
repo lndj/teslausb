@@ -287,6 +287,16 @@ set_auth_token() {
   http_cookie "$TOKEN_NAME" "$t" "/" "$exp_seconds"
 }
 
+# If not login, response error
+check_login() {
+  valid=$(check_token)
+  if [[ $valid != true ]]; then
+    http_status "401 Unauthorized"
+    response ""
+    exit 0
+  fi
+}
+
 # Passing associative arrays is poorly implemented and doesn't allow recursion,
 # so we'll use a global instead
 # shellcheck disable=SC2034
