@@ -2,6 +2,7 @@
 
 # shellcheck disable=SC2034
 PARAM_ERROR=101
+LOGIN_ERROR=102
 OK=0
 
 

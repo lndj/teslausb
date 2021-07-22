@@ -13,8 +13,25 @@ if [[ -z $username || -z $password ]]; then
 fi
 
 # Check username & password
-# TODO
+# todo db file path
+rows=$(sqlite3 /var/www/teslausb.db -json "select * from user_info where username='$username' limit 1;")
+db_password=$(echo "$rows" | jq -r '.[0] | .password')
+if [[ $db_password != "$password" ]]; then
+  res=$(res_body "$LOGIN_ERROR" "{}", "password is error")
+  response_json "$res"
+  exit 0
+fi
 
-set_auth_token "username=$username"
-res=$(res_body "$OK" "{}", "ok")
+uid=$(echo "$rows" | jq -r '.[0] | .id')
+res_data=$(cat <<EOF
+  {
+    "id": $uid,
+    "nickname": "$(echo "$rows" | jq -r '.[0] | .nickname')",
+    "icon": "$(echo "$rows" | jq -r '.[0] | .icon')",
+    "status": $(echo "$rows" | jq -r '.[0] | .status')
+  }
+EOF
+)
+set_auth_token "username=$username&uid=$uid"
+res=$(res_body "$OK" "$res_data" "ok")
 response_json "$res"
