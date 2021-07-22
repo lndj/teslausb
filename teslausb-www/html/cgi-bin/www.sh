@@ -160,6 +160,7 @@ response() {
   # Output headers
   printf "Status: %s\r\n" "$http_status_code"
 
+  http_header "X-Powered-By" "www.sh - By lndj"
   if [[ -n $content_type ]]; then
     http_header "Content-Type" "$content_type"
   else
