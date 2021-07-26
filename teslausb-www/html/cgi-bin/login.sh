@@ -14,8 +14,8 @@ fi
 
 # Check username & password
 # todo db file path
-rows=$(sqlite3 /var/www/teslausb.db -json "select * from user_info where username='$username' limit 1;")
-db_password=$(echo "$rows" | jq -r '.[0] | .password')
+rows=$(sqlite3 /var/www/teslausb.db -csv "select id,password,nickname,icon,status from user_info where username='$username' limit 1;")
+db_password=$(echo "$rows" | awk -F ',' '{print $2}')
 if [[ $db_password != "$password" ]]; then
   res=$(res_body "$LOGIN_ERROR" "{}" "password is error")
   response_json "$res"
@@ -23,13 +23,13 @@ if [[ $db_password != "$password" ]]; then
 fi
 
 token=$(gen_auth_token "username=$username&uid=$uid")
-uid=$(echo "$rows" | jq -r '.[0] | .id')
+uid=$(echo "$rows" | awk -F ',' '{print $1}')
 res_data=$(cat <<EOF
   {
     "id": $uid,
-    "nickname": "$(echo "$rows" | jq -r '.[0] | .nickname')",
-    "icon": "$(echo "$rows" | jq -r '.[0] | .icon')",
-    "status": $(echo "$rows" | jq -r '.[0] | .status'),
+    "nickname": "$(echo "$rows" | awk -F ',' '{print $3}' | tr -d '"')",
+    "icon": "$(echo "$rows" | awk -F ',' '{print $4}')",
+    "status": $(echo "$rows" | awk -F ',' '{print $5}'),
     "token": "$token"
   }
 EOF
