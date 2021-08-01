@@ -293,7 +293,7 @@ check_login() {
   valid=$(check_token)
   if [[ $valid != true ]]; then
     http_status "401 Unauthorized"
-    response ""
+    response "401 Unauthorized"
     exit 0
   fi
 }
