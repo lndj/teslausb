@@ -1,8 +1,10 @@
 #!/bin/bash
 
+SHELL_FOLDER=$(dirname "$(readlink -f "$0")")
 # shellcheck disable=SC1091
-source www.sh
-source util.sh
+source "$SHELL_FOLDER/www.sh"
+# shellcheck disable=SC1091
+source "$SHELL_FOLDER/util.sh"
 
 username=${_POST['username']}
 password=${_POST['password']}

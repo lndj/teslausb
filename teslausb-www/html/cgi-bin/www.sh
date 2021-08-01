@@ -182,6 +182,20 @@ response_json() {
   response "$1" "application/json;charset=utf-8"
 }
 
+response_json_with_msg() {
+  code=$1
+  msg=$2
+  json=$(cat << EOF
+{
+  "code":$code,
+  "msg":"$msg",
+  "data": {}
+}
+EOF
+)
+  response_json "$json"
+}
+
 http_error() {
   printf "Status: 500 Internal Server Error\r\n\r\nInternal Server Error"
   exit 1

@@ -3,6 +3,7 @@
 # shellcheck disable=SC2034
 PARAM_ERROR=101
 LOGIN_ERROR=102
+SYSTEM_ERROR=103
 OK=0
 
 
@@ -19,4 +20,16 @@ res_body() {
   "data":$data
 }
 EOF
+}
+
+check_config_file() {
+  if [[ ! -e $CONFIG_FILE ]]; then
+    response_json_with_msg "$SYSTEM_ERROR" "Something error, config file is not exists."
+    exit 1
+  fi
+}
+
+function debug_log() {
+  t=$(date "+%Y-%m-%d %H:%M:%S")
+  echo "[DEBUG] $t $1" >> /root/debug.log
 }
