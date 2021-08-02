@@ -1,11 +1,11 @@
 #!/bin/bash
 
 SHELL_FOLDER=$(dirname "$(readlink -f "$0")")
-# shellcheck disable=SC1091
+# shellcheck source=/dev/null
 source "$SHELL_FOLDER/www.sh"
-# shellcheck disable=SC1091
+# shellcheck source=/dev/null
 source "$SHELL_FOLDER/env.sh"
-# shellcheck disable=SC1091
+# shellcheck source=/dev/null
 source "$SHELL_FOLDER/util.sh"
 
 check_login
