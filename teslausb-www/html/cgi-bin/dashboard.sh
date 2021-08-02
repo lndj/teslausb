@@ -9,11 +9,8 @@
 #   5. And more ...
 
 SHELL_FOLDER=$(dirname "$(readlink -f "$0")")
-# shellcheck disable=SC1091
 source "$SHELL_FOLDER/www.sh"
-# shellcheck disable=SC1091
 source "$SHELL_FOLDER/env.sh"
-# shellcheck disable=SC1091
 source "$SHELL_FOLDER/util.sh"
 
 # 
