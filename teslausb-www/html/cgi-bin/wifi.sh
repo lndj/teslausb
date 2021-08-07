@@ -8,7 +8,6 @@ source "$SHELL_FOLDER/util.sh"
 check_login
 check_config_file
 
-# Test change config file
 ssid=${_POST['ssid']}
 wifi_pass=${_POST['wifi_pass']}
 if [[ -z $ssid || -z $wifi_pass ]]; then
