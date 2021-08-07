@@ -209,8 +209,10 @@ if [[ -n $QUERY_STRING ]]; then
     IFS='=' read -r -a name_value <<<"$name_value_str"
     name="$(url_decode "${name_value[0]}")"
     value="$(url_decode "${name_value[1]}")"
-    # shellcheck disable=SC2034
-    _GET["$name"]="$value"
+    if [[ -n $name && -n $value ]]; then
+      # shellcheck disable=SC2034
+      _GET["$name"]="$value"
+    fi
   done
 fi
 
@@ -227,8 +229,10 @@ if [[ "$CONTENT_LENGTH" -gt 0 ]]; then
       IFS='=' read -r -a name_value <<<"$name_value_str"
       name="$(url_decode "${name_value[0]}")"
       value="$(url_decode "${name_value[1]}")"
-      # shellcheck disable=SC2034
-      _POST["$name"]="$value"
+      if [[ -n $name && -n $value ]]; then
+        # shellcheck disable=SC2034
+        _POST["$name"]="$value"
+      fi
     done
     ;;
   *) ;;
@@ -246,7 +250,10 @@ if [[ -n $HTTP_COOKIE ]]; then
     name="$(url_decode "${name_value[0]}")"
     # value="$(url_decode "${name_value[1]}")"
     value="${name_value[1]}"
-    _COOKIE["$name"]="$value"
+    if [[ -n $name && -n $value ]]; then
+      # shellcheck disable=SC2034
+      _COOKIE["$name"]="$value"
+    fi
   done
 fi
 
@@ -264,8 +271,10 @@ if [[ -n ${token} ]]; then
       IFS='=' read -r -a name_value <<<"$name_value_str"
       name="$(url_decode "${name_value[0]}")"
       value="$(url_decode "${name_value[1]}")"
+      if [[ -n $name && -n $value ]]; then
       # shellcheck disable=SC2034
       _TOKEN["$name"]="$value"
+    fi
     done
   fi
 fi

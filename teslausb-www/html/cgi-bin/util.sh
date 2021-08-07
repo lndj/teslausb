@@ -44,11 +44,11 @@ function set_config_field() {
   new_conf_doc_tip=$4
 
   if grep -e "^export $key=.*" "$CONFIG_FILE" &> /dev/null; then
-    debug_log "Find the config, replace it with new content"
+    debug_log "Find the config, replace it with new content, name=$key,value=$value,value_quote=$value_quote"
     if [[ $value_quote == 1 ]]; then
-      sed -i "s/^export $key=.*/export $key='$value'/g" "$CONFIG_FILE"
+      sed -i "s#^export $key=.*#export $key='$value'#g" "$CONFIG_FILE"
     else
-      sed -i "s/^export $key=.*/export $key=$value/g" "$CONFIG_FILE"
+      sed -i "s#^export $key=.*#export $key=$value#g" "$CONFIG_FILE"
     fi
   else
     if [[ $value_quote == 1 ]]; then
@@ -56,7 +56,7 @@ function set_config_field() {
     else
       conf="export $key=$value"
     fi
-    debug_log "No WIFIPASS config find, write new config to the file: [$conf]"
+    debug_log "No $key config find, write new config to the file: [$conf]"
     if [[ -n $new_conf_doc_tip ]]; then
         echo "" >>  "$CONFIG_FILE"
         echo "# ========== $new_conf_doc_tip ===========" >>  "$CONFIG_FILE"
