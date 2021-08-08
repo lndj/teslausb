@@ -95,6 +95,18 @@ function check_rsync {
   exit 1
 }
 
+function check_rclone {
+  rclone_version=$(rclone --version 2>>errors | head -n 1)
+  if [[ -n $rclone_version ]]; then
+    log_progress "rclone has installed"
+    return 0
+  fi
+
+  log_progress "rclone doesn't work, installing"
+  get_script /tmp configure-rclone.sh setup/pi
+  /tmp/configure-rclone.sh
+}
+
 function check_archive_configs () {
     log_progress "Checking archive configs: "
 
@@ -110,6 +122,7 @@ function check_archive_configs () {
             check_variable "RCLONE_DRIVE"
             check_variable "RCLONE_PATH"
             export ARCHIVE_SERVER="8.8.8.8" # since it's a cloud hosted drive we'll just set this to google dns
+            check_rclone
             ;;
         cifs)
             check_variable "SHARE_NAME"
