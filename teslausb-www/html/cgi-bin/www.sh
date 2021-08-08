@@ -272,9 +272,9 @@ if [[ -n ${token} ]]; then
       name="$(url_decode "${name_value[0]}")"
       value="$(url_decode "${name_value[1]}")"
       if [[ -n $name && -n $value ]]; then
-      # shellcheck disable=SC2034
-      _TOKEN["$name"]="$value"
-    fi
+        # shellcheck disable=SC2034
+        _TOKEN["$name"]="$value"
+      fi
     done
   fi
 fi
