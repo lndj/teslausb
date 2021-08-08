@@ -38,7 +38,7 @@ secret_access_key = $access_key
 endpoint = $endpoint
 EOF
 
-msg=$(rclone ls oss:$bucket | head -n 1)
+msg=$(rclone ls oss:"$bucket" | head -n 1)
 if grep -e "Failed.*" -a "$msg" &> /dev/null; then
   rm -f /root/.config/rclone/rclone.conf
   mv /root/.config/rclone/rclone.conf.bak /root/.config/rclone/rclone.conf
