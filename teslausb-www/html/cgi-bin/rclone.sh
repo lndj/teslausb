@@ -11,8 +11,8 @@ check_config_file
 # todo
 bucket=${_POST['bucket']} #my-tesla-dashcam
 provider=${_POST['provider']} #Alibaba
-key_id=${_POST['key_id']} #LTAI5t9eYJaw3P9XWro3wV28
-access_key=${_POST['access_key']} #TeRnxOhaSJoz9gCJrZtPcL4PMGaTdZ
+key_id=${_POST['key_id']} #
+access_key=${_POST['access_key']} #
 endpoint=${_POST['endpoint']} #oss-cn-shanghai.aliyuncs.com
 
 if [[ -z $bucket || -z $provider || -z $key_id || -z $access_key || -z $endpoint ]]; then
