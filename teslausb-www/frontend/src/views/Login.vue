@@ -47,20 +47,16 @@
         </v-btn>
       </v-card-actions>
     </v-card>
-    <Message text="登陆出错了，请稍后再试" :timeout="2000" :show="showErrorMsg"> </Message>
   </v-form>
 </template>
 
 <script>
 import request from "@/utils/request";
-import Message from "../components/Message";
 import Cookies from "js-cookie";
 
 export default {
   name: "Login",
-  components: {
-    Message,
-  },
+
   data: () => ({
     valid: false,
     username: "",
@@ -96,6 +92,7 @@ export default {
           }
         })
         .catch((err) => {
+          this.$snackbar({content: '登陆失败：' + err.message, centered: true, color: 'red'})
           console.log("Login error: ", err.message);
         });
     },

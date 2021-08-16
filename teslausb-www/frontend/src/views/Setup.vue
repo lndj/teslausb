@@ -73,6 +73,9 @@ export default {
     wifiPassRules: [(v) => !!v || "Password is required"],
     settings:{}
   }),
+  created() {
+    this.loadCurrentConfig();
+  },
   methods: {
     submitWifi() {
       this.showErrorMsg = false;
@@ -90,15 +93,23 @@ export default {
       })
         .then((res) => {
           if (res.code === 0) {
-            console.log("Success");
+            this.$snackbar({content: 'WiFi 配置保存成功，重启后生效', centered: true, color: 'green'})
           } else {
             console.log("failed");
+            this.$snackbar({content: 'WiFi 保存失败:' + res.msg, centered: true, color: "red"})
           }
         })
         .catch((err) => {
           console.log("Login error: ", err.message);
         });
     },
+    loadCurrentConfig() {
+      // const t = this;
+      // setTimeout(() => {
+      //   t.wifiPass = '1111';
+      //   t.ssid = 'spaceX';
+      // }, 1000)
+    }
   },
 };
 </script>
