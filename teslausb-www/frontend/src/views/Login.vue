@@ -47,7 +47,7 @@
         </v-btn>
       </v-card-actions>
     </v-card>
-    <Message title="登陆提示" content="哈哈"> </Message>
+    <Message text="登陆出错了，请稍后再试" :timeout="2000" :show="showErrorMsg"> </Message>
   </v-form>
 </template>
 

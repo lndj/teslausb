@@ -248,8 +248,10 @@ if [[ -n $HTTP_COOKIE ]]; then
   for name_value_str in "${cookie[@]}"; do
     IFS='=' read -r -a name_value <<<"$name_value_str"
     name="$(url_decode "${name_value[0]}")"
-    # value="$(url_decode "${name_value[1]}")"
     value="${name_value[1]}"
+    if [[ $name == "$TOKEN_NAME" ]]; then
+      value="$(url_decode "${name_value[1]}")"
+    fi
     if [[ -n $name && -n $value ]]; then
       # shellcheck disable=SC2034
       _COOKIE["$name"]="$value"

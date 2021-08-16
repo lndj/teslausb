@@ -1,17 +1,13 @@
 <template>
-  <v-dialog transition="dialog-bottom-transition" max-width="600" v-model="dialog">
-    <template v-slot:default="dialog">
-      <v-card>
-        <v-toolbar color="primary" dark>{{ title }}</v-toolbar>
-        <v-card-text>
-          <div class="text-h2 pa-12">{{ content }}</div>
-        </v-card-text>
-        <v-card-actions class="justify-end">
-          <v-btn text @click="dialog = false">Close</v-btn>
-        </v-card-actions>
-      </v-card>
+  <v-snackbar v-model="showSnackbar" :timeout="timeout">
+    {{ text }}
+
+    <template v-slot:action="{ attrs }">
+      <v-btn color="blue" text v-bind="attrs" @click="showSnackbar = false">
+        Close
+      </v-btn>
     </template>
-  </v-dialog>
+  </v-snackbar>
 </template>
 
 <script>
@@ -19,22 +15,12 @@ export default {
   name: "Message",
 
   props: {
-    title: String,
-    content: String,
+    text: String,
+    timeout: Number,
     show: Boolean
   },
-  computed: {
-    dialog: {
-      set(newValue) {
-        console.log(newValue)
-      },
-      get() {
-        return this.show
-      }
-    }
-  },
   data: () => ({
-    
+    showSnackbar: this.show
   })
 };
 </script>

@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# shellcheck disable=SC1091
-source env.sh
+SHELL_FOLDER=$(dirname "$(readlink -f "$0")")
+source "$SHELL_FOLDER/env.sh"
 
 create_table() {
   sql=$(cat <<EOF

@@ -3,11 +3,12 @@ import qs from 'qs'
 
 // create an axios instance
 const service = axios.create({
-  baseURL: 'http://localhost:8090',
-  withCredentials: false, // send cookies when cross-domain requests
+  // baseURL: 'http://localhost:8090',
+  withCredentials: true, // send cookies when cross-domain requests
   timeout: 20000, // request timeout
   headers: {
-    'Content-Type': 'application/x-www-form-urlencoded'
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'Access-Control-Allow-Origin': '*'
   }
 })
 

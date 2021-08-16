@@ -8,9 +8,8 @@ module.exports = {
 
   devServer: {
     proxy: {
-      '/cgi-bin': {
+      '/': {
         target: 'http://localhost:8090',
-        ws: true,
         changeOrigin: true,
         secure: false
       }
