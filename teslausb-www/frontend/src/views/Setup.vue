@@ -95,14 +95,20 @@
       ></v-progress-circular>
       <div class="text-caption">正在保存中...</div>
     </v-overlay>
+
+    <reboot></reboot>
   </v-card>
 </template>
 
 <script>
 import request from "@/utils/request";
+import Reboot from '../components/Reboot.vue';
 
 export default {
   name: "Setup",
+  components: {
+    Reboot,
+  },
   data: () => ({
     loading: false,
 
@@ -111,10 +117,8 @@ export default {
     ssidRules: [(v) => !!v || "WiFi ssid is required"],
     wifiPass: "",
     wifiPassRules: [(v) => !!v || "Password is required"],
-    
-    rcloneProviders: [
-      'Alibaba'
-    ],
+
+    rcloneProviders: ["Alibaba"],
     provider: null,
     providerRules: [(v) => !!v || "Provider is required"],
     bucket: "",
@@ -127,7 +131,7 @@ export default {
     endpointRules: [(v) => !!v || "Endpoint is required"],
     rcloneValid: null,
   }),
-  created() {
+  mounted() {
     this.loadCurrentConfig();
   },
   methods: {
@@ -174,7 +178,7 @@ export default {
         bucket: this.bucket,
         key_id: this.keyId,
         access_key: this.accessKey,
-        endpoint: this.endpoint
+        endpoint: this.endpoint,
       };
       request({
         url: "/cgi-bin/rclone.sh",
@@ -224,7 +228,13 @@ export default {
             this.accessKey = res.data.access_key;
             this.endpoint = res.data.endpoint;
 
-            this.$snackbar({ content: "配置加载成功", top: true });
+            this.$snackbar({
+              content: "配置加载成功",
+              top: true,
+              timeout: 1000,
+              outlined: true,
+              hideActions: true,
+            });
           } else {
             console.log("failed");
           }
@@ -236,3 +246,41 @@ export default {
   },
 };
 </script>
+<style>
+.custom-loader {
+  animation: loader 1s infinite;
+  display: flex;
+}
+@-moz-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>
