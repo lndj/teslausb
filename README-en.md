@@ -1,13 +1,11 @@
 # teslausb
 
-## 介绍
+## Intro
 
 You can configure a Raspberry Pi Zero W or Raspberry Pi 4 so that your Tesla thinks it's a USB drive and will write dashcam footage to it. Since it's a computer:
 * Scripts running on the Pi can automatically copy the clips to an archive server when you get home.
 * The Pi can hold both dashcam clips and music files.
 * The Pi can automatically repair filesystem corruption produced by the Tesla's current failure to properly dismount the USB drives before cutting power to the USB ports.
-
-If you want to read this in English, please click [English Readme](README-en.md)
 
 ## Installing
 
