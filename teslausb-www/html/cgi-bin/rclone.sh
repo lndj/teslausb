@@ -8,7 +8,6 @@ source "$SHELL_FOLDER/util.sh"
 check_login
 check_config_file
 
-# todo
 bucket=${_POST['bucket']} #my-tesla-dashcam
 provider=${_POST['provider']} #Alibaba
 key_id=${_POST['key_id']} #
@@ -29,21 +28,26 @@ if [[ -f /root/.config/rclone/rclone.conf ]]; then
   cp /root/.config/rclone/rclone.conf /root/.config/rclone/rclone.conf.bak
 fi
 
+mkdir -p /root/.config/rclone
 cat <<- EOF > /root/.config/rclone/rclone.conf
 [oss]
-type = s3
-provider = $provider
-access_key_id = $key_id
-secret_access_key = $access_key
-endpoint = $endpoint
+type=s3
+provider=$provider
+access_key_id=$key_id
+secret_access_key=$access_key
+endpoint=$endpoint
 EOF
 
-msg=$(rclone ls oss:"$bucket" | head -n 1)
-if grep -e "Failed.*" -a "$msg" &> /dev/null; then
+function res_failed() {
   rm -f /root/.config/rclone/rclone.conf
   mv /root/.config/rclone/rclone.conf.bak /root/.config/rclone/rclone.conf
-  response_json_with_msg "$PARAM_ERROR" "rclone config error: $msg"
-else
+  response_json_with_msg "$PARAM_ERROR" "$1"
+}
+
+echo 'Teslausb config test' > /tmp/oss-test.log
+if rclone sync /tmp/oss-test.log oss:"$bucket" &> /dev/null; then
   rm -f /root/.config/rclone/rclone.conf.bak
   response_json_with_msg "$OK" "Set rclone config success"
+else
+  res_failed "配置错误，请检查"
 fi

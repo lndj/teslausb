@@ -64,3 +64,13 @@ function set_config_field() {
     echo "$conf" >>  "$CONFIG_FILE"
   fi
 }
+
+function get_config_field() {
+  key=$1
+  value=""
+  line=$(grep -e "^export $key=.*" "$CONFIG_FILE")
+  if [[ -n $line ]]; then
+    value=$(echo "$line" | awk -F '=' '{print $2}')
+  fi
+  echo "$value" | tr -d "'"
+}

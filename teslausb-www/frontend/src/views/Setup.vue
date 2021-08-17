@@ -40,22 +40,61 @@
 
     <v-list subheader two-line flat>
       <v-subheader>Cloud Sync</v-subheader>
-
-      <v-list-item-group v-model="settings" multiple>
-        <v-list-item>
-          <template v-slot:default="{ active }">
-            <v-list-item-action>
-              <v-checkbox :input-value="active" color="primary"></v-checkbox>
-            </v-list-item-action>
-
-            <v-list-item-content>
-              <v-list-item-title>Notifications</v-list-item-title>
-              <v-list-item-subtitle>Allow notifications</v-list-item-subtitle>
-            </v-list-item-content>
-          </template>
-        </v-list-item>
-      </v-list-item-group>
+      <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title>设置云端同步</v-list-item-title>
+          <v-list-item-subtitle>请先申请您有云端同步账户</v-list-item-subtitle>
+          <v-row justify="start">
+            <v-col cols="12" md="4">
+              <v-form
+                v-model="rcloneValid"
+                ref="rcloneForm"
+                @submit.prevent="submitRclone"
+              >
+                <v-select
+                  :items="rcloneProviders"
+                  v-model="provider"
+                  :rules="providerRules"
+                  label="Provider"
+                ></v-select>
+                <v-text-field
+                  v-model="bucket"
+                  :rules="bucketRules"
+                  label="Bucket"
+                ></v-text-field>
+                <v-text-field
+                  v-model="keyId"
+                  :rules="keyIdRules"
+                  label="Key id"
+                ></v-text-field>
+                <v-text-field
+                  v-model="accessKey"
+                  :rules="accessKeyRules"
+                  label="Access key"
+                ></v-text-field>
+                <v-text-field
+                  v-model="endpoint"
+                  :rules="endpointRules"
+                  placeholder="oss-cn-shanghai.aliyuncs.com"
+                  label="Endpoint"
+                ></v-text-field>
+                <v-btn class="mr-4" type="submit" :disabled="!wifiValid">
+                  保存
+                </v-btn>
+              </v-form>
+            </v-col>
+          </v-row>
+        </v-list-item-content>
+      </v-list-item>
     </v-list>
+    <v-overlay :value="loading">
+      <v-progress-circular
+        indeterminate
+        color="primary"
+        size="64"
+      ></v-progress-circular>
+      <div class="text-caption">正在保存中...</div>
+    </v-overlay>
   </v-card>
 </template>
 
@@ -65,20 +104,34 @@ import request from "@/utils/request";
 export default {
   name: "Setup",
   data: () => ({
-    showErrorMsg: false,
+    loading: false,
+
     wifiValid: null,
     ssid: "",
     ssidRules: [(v) => !!v || "WiFi ssid is required"],
     wifiPass: "",
     wifiPassRules: [(v) => !!v || "Password is required"],
-    settings:{}
+    
+    rcloneProviders: [
+      'Alibaba'
+    ],
+    provider: null,
+    providerRules: [(v) => !!v || "Provider is required"],
+    bucket: "",
+    bucketRules: [(v) => !!v || "Bucket is required"],
+    keyId: "",
+    keyIdRules: [(v) => !!v || "Key id is required"],
+    accessKey: "",
+    accessKeyRules: [(v) => !!v || "Access key is required"],
+    endpoint: "",
+    endpointRules: [(v) => !!v || "Endpoint is required"],
+    rcloneValid: null,
   }),
   created() {
     this.loadCurrentConfig();
   },
   methods: {
     submitWifi() {
-      this.showErrorMsg = false;
       if (!this.$refs.wifiForm.validate()) {
         return;
       }
@@ -93,23 +146,93 @@ export default {
       })
         .then((res) => {
           if (res.code === 0) {
-            this.$snackbar({content: 'WiFi 配置保存成功，重启后生效', centered: true, color: 'green'})
+            this.$snackbar({
+              content: "WiFi 配置保存成功，重启后生效",
+              centered: true,
+              color: "green",
+            });
           } else {
             console.log("failed");
-            this.$snackbar({content: 'WiFi 保存失败:' + res.msg, centered: true, color: "red"})
+            this.$snackbar({
+              content: "WiFi 保存失败:" + res.msg,
+              centered: true,
+              color: "red",
+            });
           }
         })
         .catch((err) => {
-          console.log("Login error: ", err.message);
+          console.log("WiFi config error: ", err.message);
+        });
+    },
+    submitRclone() {
+      if (!this.$refs.rcloneForm.validate()) {
+        return;
+      }
+      this.loading = true;
+      const formData = {
+        provider: this.provider,
+        bucket: this.bucket,
+        key_id: this.keyId,
+        access_key: this.accessKey,
+        endpoint: this.endpoint
+      };
+      request({
+        url: "/cgi-bin/rclone.sh",
+        method: "post",
+        data: formData,
+      })
+        .then((res) => {
+          this.loading = false;
+          if (res.code === 0) {
+            this.$snackbar({
+              content: "Cloud Sync 配置保存成功，重启后生效",
+              centered: true,
+              color: "green",
+            });
+          } else {
+            console.log("failed");
+            this.$snackbar({
+              content: "Cloud Sync 保存失：" + res.msg,
+              centered: true,
+              color: "red",
+            });
+          }
+        })
+        .catch((err) => {
+          this.loading = false;
+          this.$snackbar({
+            content: "保存 Cloud Sync 配置失败：" + err.message,
+            centered: true,
+            color: "red",
+          });
+          console.log("Cloud Sync error: ", err.message);
         });
     },
     loadCurrentConfig() {
-      // const t = this;
-      // setTimeout(() => {
-      //   t.wifiPass = '1111';
-      //   t.ssid = 'spaceX';
-      // }, 1000)
-    }
+      request({
+        url: "/cgi-bin/configs.sh",
+        method: "get",
+      })
+        .then((res) => {
+          if (res.code === 0) {
+            this.ssid = res.data.ssid;
+            this.wifiPass = res.data.wifi_pass;
+
+            this.provider = res.data.provider;
+            this.bucket = res.data.bucket;
+            this.keyId = res.data.key_id;
+            this.accessKey = res.data.access_key;
+            this.endpoint = res.data.endpoint;
+
+            this.$snackbar({ content: "配置加载成功", top: true });
+          } else {
+            console.log("failed");
+          }
+        })
+        .catch((err) => {
+          console.log("Get configs error: ", err.message);
+        });
+    },
   },
 };
 </script>
