@@ -14,7 +14,7 @@ mount /var/log/nginx
 mount /var/lib/nginx
 
 # replace --force-yes
-apt-get -y --allow-downgrades --allow-remove-essential -allow-unauthenticated install nginx fcgiwrap libnginx-mod-http-fancyindex libfuse-dev
+apt-get -y --allow-downgrades --allow-remove-essential --allow-unauthenticated install nginx fcgiwrap libnginx-mod-http-fancyindex libfuse-dev
 
 # install data files and config files
 systemctl stop nginx.service &> /dev/null || true
