@@ -27,3 +27,4 @@ pnpm-debug.log*
 *.sw?
 
 .venv/
+teslausb-www/html/cgi-bin/test.sh

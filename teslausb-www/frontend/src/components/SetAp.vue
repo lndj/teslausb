@@ -19,7 +19,7 @@
               ></v-text-field>
               <v-text-field
                 v-model="apPass"
-                :rules="requiredRules"
+                :rules="apPassRules"
                 label="Ap password"
               ></v-text-field>
               <v-btn outlined class="mr-4" type="submit" :disabled="!apValid">
@@ -43,6 +43,10 @@ export default {
     apSsid: null,
     apPass: null,
     requiredRules: [(v) => !!v || "This field is required"],
+    apPassRules: [
+      (v) => !!v || "This field is required",
+      (v) => (v && v.length >= 8) || "ap pass is too short",
+    ],
   }),
   mounted() {
     this.loadCurrentConfig();
