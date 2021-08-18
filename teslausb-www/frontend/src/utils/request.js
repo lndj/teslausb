@@ -1,5 +1,6 @@
 import axios from 'axios'
 import qs from 'qs'
+import Cookies from "js-cookie"
 
 // create an axios instance
 const service = axios.create({
@@ -54,6 +55,9 @@ service.interceptors.response.use(
     return res
   },
   error => {
+    if (error.request.status === 401) {
+      Cookies.remove("X-Token");
+    }
     console.error(error) // for debug
     return Promise.reject(error)
   }

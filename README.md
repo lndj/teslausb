@@ -2,16 +2,16 @@
 
 ## 介绍
 
-You can configure a Raspberry Pi Zero W or Raspberry Pi 4 so that your Tesla thinks it's a USB drive and will write dashcam footage to it. Since it's a computer:
-* Scripts running on the Pi can automatically copy the clips to an archive server when you get home.
-* The Pi can hold both dashcam clips and music files.
-* The Pi can automatically repair filesystem corruption produced by the Tesla's current failure to properly dismount the USB drives before cutting power to the USB ports.
+你可以将一个树莓派 Pi Zero W 或者 树莓派 Pi 4 制作为一个 Tesla 车辆专用的 U 盘，以实现存储车辆行车记录仪/哨兵模式视频数据的功能。由于这本质上是一个计算机：
+* 可以实现车辆记录视频数据的自动备份云端；
+* 同时可以当作记录仪存储和音乐存储；
+* 可以自动修复由于 Tesla 车辆在 USB 接口突然断电等异常情况下导致的文件系统异常；
 
 If you want to read this in English, please click [English Readme](README-en.md)
 
-## Installing
+## 安装方式
 
-It is recommended to use the [prebuilt image](https://github.com/marcone/teslausb/releases) and [one step setup instructions](https://github.com/marcone/teslausb/blob/main-dev/doc/OneStepSetup.md) to get started, as the instructions below may be outdated.
+推荐使用[预构建好的镜像](https://github.com/lndj/teslausb/releases)，参考[一步设置说明](https://github.com/lndj/teslausb/blob/main-dev/doc/OneStepSetup.md) 安装。
 
 If you've never worked with Raspberry Pi before, don't know what a Windows share is, or just want to see what this is all about, check out this YouTube video:
 
@@ -20,6 +20,27 @@ If you've never worked with Raspberry Pi before, don't know what a Windows share
 Note that archiving the clips can take from seconds to hours depending on how many clips you've saved and how strong the WiFi signal is in your Tesla. If you find that the clips aren't getting completely transferred before the car powers down after you park or before you leave you can use the Tesla app to turn on the Climate control. This will send power to the Raspberry Pi, allowing it to complete the archival operation.
 
 Alternatively, you can provide your Tesla account credentials and VIN in TeslaUSB's settings, which will allow it to use the [Tesla API](https://tesla-api.timdorr.com) to keep the car awake while the files transfer.
+
+
+## 硬件
+
+必须:
+* [Raspberry Pi Zero W](https://www.raspberrypi.org/products/raspberry-pi-zero-w/) ([Adafruit](https://www.adafruit.com/product/3400) or [Amazon](https://www.amazon.com/s?k=raspberry+pi+zero+w))
+或者
+[Raspberry Pi 4](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/) ([Adafruit](https://www.adafruit.com/product/4295) or [Amazon](https://www.amazon.com/s?k=raspberry+pi+4))
+
+
+## 当前已有修改
+1. 部分依赖网络服务的操作[中国化]，避免一些特别的原因导致的启动失败，同步失败等情况；
+2. 增加镜像制作脚本；
+3. 页面功能丰富，支持修改 wifi 配置、升级等；
+### TODO
+- 调整启动归档的逻辑，适配车上有 Wifi 的场景；
+- Rclone 同步支持显示进度；
+- 完善依赖网络服务[中国化]；
+- 支持 Rclone 方式的音乐同步；
+- 支持网页端下载视频。
+
 
 ## Contributing
 
@@ -32,15 +53,6 @@ For pull requests, please split complex changes into multiple pull requests when
 
 * You park in range of your wireless network.
 * Your wireless network is configured with WPA2 PSK access.
-
-### Hardware
-
-Required:
-* [Raspberry Pi Zero W](https://www.raspberrypi.org/products/raspberry-pi-zero-w/) ([Adafruit](https://www.adafruit.com/product/3400) or [Amazon](https://www.amazon.com/s?k=raspberry+pi+zero+w))
-or
-[Raspberry Pi 4](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/) ([Adafruit](https://www.adafruit.com/product/4295) or [Amazon](https://www.amazon.com/s?k=raspberry+pi+4))
-
-
 
 **Note: Of the many varieties of Raspberry Pi available only the Raspberry Pi Zero W and Raspberry Pi 4 will work with TeslaUSB**.
 * A Micro SD card, at least 64 GB in size, and an adapter (if necessary) to connect the card to your computer.
@@ -236,13 +248,3 @@ This repo contains steps and scripts originally from [this thread on Reddit]( ht
 
 Many people in that thread suggested that the scripts be hosted on Github but the author didn't seem interested in making that happen. I've hosted the scripts here with his/her permission.
 
-
-## 当前已有修改
-1. 部分依赖网络服务的操作[中国化]，避免一些特别的原因导致的启动失败，同步失败等情况；
-2. 增加镜像制作脚本；
-## TODO
-- 调整启动归档的逻辑，适配车上有 Wifi 的场景；
-- 页面功能丰富，支持修改 wifi 配置、升级等；
-- 完善依赖网络服务[中国化]；
-- 支持 Rclone 方式的音乐同步；
-- 支持网页端下载视频。

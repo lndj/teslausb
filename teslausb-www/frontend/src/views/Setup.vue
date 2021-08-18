@@ -26,7 +26,7 @@
                   autocomplete="current-password"
                   label="WiFi password"
                 ></v-text-field>
-                <v-btn class="mr-4" type="submit" :disabled="!wifiValid">
+                <v-btn outlined class="mr-4" type="submit" :disabled="!wifiValid">
                   保存
                 </v-btn>
               </v-form>
@@ -78,7 +78,7 @@
                   placeholder="oss-cn-shanghai.aliyuncs.com"
                   label="Endpoint"
                 ></v-text-field>
-                <v-btn class="mr-4" type="submit" :disabled="!wifiValid">
+                <v-btn outlined class="mr-4" type="submit" :disabled="!wifiValid">
                   保存
                 </v-btn>
               </v-form>
@@ -87,6 +87,11 @@
         </v-list-item-content>
       </v-list-item>
     </v-list>
+
+    <v-divider></v-divider>
+
+    <set-notification />
+
     <v-overlay :value="loading">
       <v-progress-circular
         indeterminate
@@ -97,17 +102,20 @@
     </v-overlay>
 
     <reboot></reboot>
+    <br><br><br><br>
   </v-card>
 </template>
 
 <script>
 import request from "@/utils/request";
 import Reboot from '../components/Reboot.vue';
+import SetNotification from '../components/SetNotification.vue';
 
 export default {
   name: "Setup",
   components: {
     Reboot,
+    SetNotification,
   },
   data: () => ({
     loading: false,
@@ -118,7 +126,7 @@ export default {
     wifiPass: "",
     wifiPassRules: [(v) => !!v || "Password is required"],
 
-    rcloneProviders: ["Alibaba"],
+    rcloneProviders: ['Alibaba'],
     provider: null,
     providerRules: [(v) => !!v || "Provider is required"],
     bucket: "",

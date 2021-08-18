@@ -43,10 +43,7 @@ export default {
         .then((res) => {
           if (res.code === 0) {
             this.rebooting = true;
-            const t = this;
-            setTimeout(() => {
-              t.checkByInterval();
-            }, 10000)
+            this.checkByInterval();
           }
         })
         .catch((err) => {

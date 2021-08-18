@@ -108,8 +108,8 @@ function check_and_set_webhook() {
 
 case "$type" in
   bark)
-    bar_token=${_POST['bar_token']}
-    check_and_set_bark "$bar_token"
+    bark_token=${_POST['bark_token']}
+    check_and_set_bark "$bark_token"
     ;;
   slack)
     slack_webhook_url=${_POST['slack_webhook_url']}

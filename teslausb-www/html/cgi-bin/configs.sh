@@ -10,6 +10,8 @@ source "$SHELL_FOLDER/util.sh"
 check_login
 check_config_file
 
+type=${_GET['type']}
+
 # WiFi
 ssid=$(get_config_field "SSID")
 wifi_pass=$(get_config_field "WIFIPASS")
@@ -29,7 +31,59 @@ fi
 
 # Ap
 
-# Notification ; todo strategy
+# Notification
+if [[ $type == 'notification' ]]; then
+  # Get all enabled notify types
+  declare -A notificationTypeMap
+  notificationTypeMap['bark']='BARK_ENABLED'
+  notificationTypeMap['slack']='SLACK_ENABLED'
+  notificationTypeMap['pushover']='PUSHOVER_ENABLED'
+  notificationTypeMap['gotify']='GOTIFY_ENABLED'
+  notificationTypeMap['ifttt']='IFTTT_ENABLED'
+  notificationTypeMap['webhook']='WEBHOOK_ENABLED'
+  notification_types=''
+  for key in "${!notificationTypeMap[@]}"; do
+    v=$(get_config_field "${notificationTypeMap[$key]}")
+    if [[ $v == 'true' ]]; then
+      if [[ -n $notification_types ]]; then
+        notification_types="$notification_types,$key"
+      else
+        notification_types="$key"
+      fi
+    fi
+  done
+
+  bark_token=$(get_config_field "BARK_TOKEN")
+  slack_webhook_url=$(get_config_field "SLACK_WEBHOOK_URL")
+  pushover_user_key=$(get_config_field "PUSHOVER_USER_KEY")
+  pushover_app_key=$(get_config_field "PUSHOVER_APP_KEY")
+  gotify_domain=$(get_config_field "GOTIFY_DOMAIN")
+  gotify_token=$(get_config_field "GOTIFY_APP_TOKEN")
+  gotify_priority=$(get_config_field "GOTIFY_PRIORITY")
+  ifttt_event_name=$(get_config_field "IFTTT_EVENT_NAME")
+  ifttt_key=$(get_config_field "IFTTT_KEY")
+  webhook_url=$(get_config_field "WEBHOOK_URL")
+
+  res_data=$(cat <<EOF
+  {
+    "notification_types":"$notification_types",
+    "bark_token":"$bark_token",
+    "slack_webhook_url":"$slack_webhook_url",
+    "pushover_user_key":"$pushover_user_key",
+    "pushover_app_key":"$pushover_app_key",
+    "gotify_domain":"$gotify_domain",
+    "gotify_token":"$gotify_token",
+    "gotify_priority":"$gotify_priority",
+    "ifttt_event_name":"$ifttt_event_name",
+    "ifttt_key":"$ifttt_key",
+    "webhook_url":"$webhook_url"
+  }
+EOF
+)
+  res=$(res_body "$OK" "$res_data" "ok")
+  response_json "$res"
+  exit 0
+fi
 
 res_data=$(cat <<EOF
   {
