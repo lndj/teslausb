@@ -29,6 +29,14 @@
           </v-list-item>
         </v-list-item-group>
       </v-list>
+
+      <template v-slot:append v-if="this.$route.path != '/login'">
+        <div class="pa-2">
+          <v-btn block outlined @click="logout">
+            Logout
+          </v-btn>
+        </div>
+      </template>
     </v-navigation-drawer>
 
     <v-app-bar app color="primary" dark>
@@ -59,9 +67,10 @@
 
 <script>
 import GithubButton from "vue-github-button";
+import Cookies from "js-cookie";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     GithubButton,
   },
@@ -79,15 +88,13 @@ export default {
   computed: {
     currentItemTitle: function () {
       let tempSelectedItem = this.selectedItem;
-      if(this.selectedItem === null) {
-        const item = this.items.find(x => x.uri === this.$route.path);
-        if(item) {
+      if (this.selectedItem === null) {
+        const item = this.items.find((x) => x.uri === this.$route.path);
+        if (item) {
           tempSelectedItem = this.items.indexOf(item);
         }
       }
-      return tempSelectedItem == null
-        ? ""
-        : this.items[tempSelectedItem].title;
+      return tempSelectedItem == null ? "" : this.items[tempSelectedItem].title;
     },
   },
   watch: {
@@ -100,6 +107,10 @@ export default {
       if (this.$route.path !== item.uri) {
         this.$router.push(item.uri);
       }
+    },
+    logout() {
+      Cookies.remove("X-Token");
+      this.$router.push('/login');
     },
   },
 };

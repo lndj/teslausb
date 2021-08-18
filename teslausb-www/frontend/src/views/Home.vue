@@ -3,31 +3,24 @@
     <!-- <v-container
       class="grey lighten-5 mb-6"
     > -->
-    <latest-sync-log />
+    <filesys-state />
 
     <!-- </v-container> -->
     <!-- <hello-world /> -->
-    
   </div>
 </template>
 
 <script>
-  // import HelloWorld from '../components/HelloWorld'
-  import LatestSyncLog from '../components/LatestSyncLog'
+import FilesysState from "../components/FilesysState.vue";
 
-  export default {
-    name: 'Home',
+export default {
+  name: "Home",
 
-    components: {
-      // HelloWorld,
-      LatestSyncLog,
-    },
-    data: () => ({
-      alignments: [
-        'start',
-        'center',
-        'end',
-      ],
-    }),
-  }
+  components: {
+    FilesysState,
+  },
+  data: () => ({
+    alignments: ["start", "center", "end"],
+  }),
+};
 </script>
