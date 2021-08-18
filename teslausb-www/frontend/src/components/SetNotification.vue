@@ -89,7 +89,6 @@ export default {
   },
   methods: {
     submitNotification() {
-      this.rebooting = false;
       request({
         url: "/cgi-bin/notification.sh",
         method: "post",

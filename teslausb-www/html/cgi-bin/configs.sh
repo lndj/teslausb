@@ -30,6 +30,20 @@ if [[ -e $rclone_conf_file ]]; then
 fi
 
 # Ap
+if [[ $type == 'ap' ]]; then
+  ap_ssid=$(get_config_field "AP_SSID")
+  ap_pass=$(get_config_field "AP_PASS")
+  res_data=$(cat <<EOF
+  {
+    "ap_ssid":"$ap_ssid",
+    "ap_pass":"$ap_pass"
+  }
+EOF
+)
+  res=$(res_body "$OK" "$res_data" "ok")
+  response_json "$res"
+  exit 0
+fi
 
 # Notification
 if [[ $type == 'notification' ]]; then
