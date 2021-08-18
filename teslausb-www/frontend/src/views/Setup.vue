@@ -8,7 +8,7 @@
           <v-list-item-title>设置 WiFi 账号和密码</v-list-item-title>
           <v-list-item-subtitle>仅支持 2.4 GHz</v-list-item-subtitle>
           <v-row justify="start">
-            <v-col cols="12" md="4">
+            <v-col cols="12" md="8">
               <v-form
                 v-model="wifiValid"
                 ref="wifiForm"
@@ -45,7 +45,7 @@
           <v-list-item-title>设置云端同步</v-list-item-title>
           <v-list-item-subtitle>请先申请您有云端同步账户</v-list-item-subtitle>
           <v-row justify="start">
-            <v-col cols="12" md="4">
+            <v-col cols="12" md="8">
               <v-form
                 v-model="rcloneValid"
                 ref="rcloneForm"
@@ -91,7 +91,9 @@
     <v-divider></v-divider>
 
     <set-notification />
+
     <v-divider></v-divider>
+    
     <set-ap />
 
     <v-overlay :value="loading">
