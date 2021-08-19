@@ -22,7 +22,7 @@ then
   cam_size_raw=$( parted -s /backingfiles/cam_disk.bin print )
   if [ -n "$cam_size_raw" ]
   then
-    cam_size=$(grep -e '^Disk /backingfiles/cam_disk.bin*' | awk '{print $3}')
+    cam_size=$(echo "$cam_size_raw" | grep -e '^Disk /backingfiles/cam_disk.bin*' | awk '{print $3}')
   fi
 fi
 
@@ -32,7 +32,7 @@ then
   music_size_raw=$( parted -s /backingfiles/music_disk.bin print )
   if [ -n "$music_size_raw" ]
   then
-    music_size=$(grep -e '^Disk /backingfiles/music_disk.bin*' | awk '{print $3}')
+    music_size=$(echo "$music_size_raw" | grep -e '^Disk /backingfiles/music_disk.bin*' | awk '{print $3}')
   fi
 fi
 

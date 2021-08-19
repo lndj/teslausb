@@ -3,7 +3,7 @@
 SHELL_FOLDER=$(dirname "$(readlink -f "$0")")
 source "$SHELL_FOLDER/env.sh"
 
-create_table() {
+create_user_table() {
   sql=$(cat <<EOF
   CREATE TABLE IF NOT EXISTS 'user_info' (
   'id' INTEGER PRIMARY KEY NOT NULL,
@@ -22,11 +22,10 @@ initial_user() {
   sql=$(cat <<EOF
   INSERT INTO 'user_info' ('id', 'username', 'password', 'nickname', 'icon', 'status') 
   VALUES (NULL, 'admin', '123456', "管理员", 'icon', '1');
-);
 EOF
 )
   sqlite3 "$DB_FILE_PATH" "$sql"
 }
 
-create_table
+create_user_table
 initial_user

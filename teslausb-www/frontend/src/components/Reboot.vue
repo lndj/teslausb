@@ -64,7 +64,8 @@ export default {
     checkRebootStatus() {
       request({
         url: "/cgi-bin/rebootv2.sh",
-        method: "get"
+        method: "get",
+        timeout: 1000,
       })
         .then((res) => {
           if (res.code === 0) {
