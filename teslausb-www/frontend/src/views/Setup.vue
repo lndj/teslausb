@@ -210,7 +210,7 @@ export default {
           } else {
             console.log("failed");
             this.$snackbar({
-              content: "Cloud Sync 保存失：" + res.msg,
+              content: "Cloud Sync 保存失败：" + res.msg,
               centered: true,
               color: "red",
             });
@@ -236,12 +236,21 @@ export default {
             this.ssid = res.data.ssid;
             this.wifiPass = res.data.wifi_pass;
 
-            this.provider = res.data.provider;
-            this.bucket = res.data.bucket;
-            this.keyId = res.data.key_id;
-            this.accessKey = res.data.access_key;
-            this.endpoint = res.data.endpoint;
-
+            if (res.data.provider) {
+              this.provider = res.data.provider.trim();
+            }
+            if (res.data.bucket) {
+              this.bucket = this.bucket = res.data.bucket.trim();
+            }
+            if (res.data.key_id) {
+              this.keyId = res.data.key_id.trim();
+            }
+            if (res.data.access_key) {
+              this.accessKey = res.data.access_key.trim();
+            }
+            if (res.data.endpoint) {
+              this.endpoint = res.data.endpoint.trim();
+            }
             this.$snackbar({
               content: "配置加载成功",
               top: true,

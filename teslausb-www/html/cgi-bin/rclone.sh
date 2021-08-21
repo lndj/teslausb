@@ -24,12 +24,12 @@ set_config_field "RCLONE_DRIVE" "oss" 1
 set_config_field "RCLONE_PATH" "$bucket" 1
 # set_config_field "RCLONE_FLAGS" ""
 
-BAK_CONFIG="$RCLONE_CONFIG_FILE.bak"
+BAK_CONFIG="/tmp/rclone.conf"
 if [[ -f $RCLONE_CONFIG_FILE ]]; then
   cp "$RCLONE_CONFIG_FILE" "$BAK_CONFIG"
 fi
 
-mkdir -p /root/.config/rclone
+mkdir -p /mutable/configs/rclone
 cat <<- EOF > "$RCLONE_CONFIG_FILE"
 [oss]
 type=s3
@@ -45,7 +45,7 @@ function res_failed() {
   response_json_with_msg "$PARAM_ERROR" "$1"
 }
 
-if ! rclone lsd "oss:$bucket" > /dev/null
+if ! rclone --config "$RCLONE_CONFIG_FILE" lsd "oss:$bucket" > /dev/null
 then
     res_failed "配置错误，请检查"
     exit 1
