@@ -43,7 +43,7 @@
 
 <script>
 export default {
-  name: "HelloWorld",
+  name: "About",
 
   data: () => ({
     ecosystem: [
