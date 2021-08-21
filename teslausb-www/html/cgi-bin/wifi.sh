@@ -18,4 +18,6 @@ fi
 set_config_field "SSID" "$ssid" 1 "WiFi"
 set_config_field "WIFIPASS" "$wifi_pass" 1
 
+sudo touch /boot/WIFI_CONFIG_CHANGED
+
 response_json_with_msg "$OK" "Wifi config change success"

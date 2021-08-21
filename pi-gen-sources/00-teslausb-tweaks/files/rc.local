@@ -50,7 +50,7 @@ function enable_wifi () {
   setup_progress "Detecting whether to update wpa_supplicant.conf"
   if [[ -n "$SSID" ]] && [[ -n "$WIFIPASS" ]]
   then
-    if [ ! -e /boot/WIFI_ENABLED ]
+    if [ ! -e /boot/WIFI_ENABLED ] || [ -e /boot/WIFI_CONFIG_CHANGED ]
     then
       if [ -e /root/bin/remountfs_rw ]
       then
@@ -73,6 +73,7 @@ function enable_wifi () {
       fi
 
       touch /boot/WIFI_ENABLED
+      rm -rf /boot/WIFI_CONFIG_CHANGED
       setup_progress "Rebooting..."
       exec reboot
     fi
@@ -91,17 +92,6 @@ then
   mv /boot/teslausb_setup_variables.conf /root/
   dos2unix /root/teslausb_setup_variables.conf
 fi
-# Replace new config by WebUI admin.
-mkdir -p /mutable/configs/
-if [ -e "/mutable/configs/teslausb_setup_variables.conf" ]
-then
-  cp /mutable/configs/teslausb_setup_variables.conf /root/teslausb_setup_variables.conf
-fi
-if [ -e "/root/teslausb_setup_variables.conf" ] && [ ! -e  "/mutable/configs/teslausb_setup_variables.conf" ]
-then
-  cp /root/teslausb_setup_variables.conf /mutable/configs/teslausb_setup_variables.conf
-fi
-chmod o+w /mutable/configs/teslausb_setup_variables.conf
 
 if [ -e "/root/teslausb_setup_variables.conf" ]
 then
