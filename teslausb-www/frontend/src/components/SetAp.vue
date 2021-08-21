@@ -4,14 +4,12 @@
     <v-list-item>
       <v-list-item-content>
         <v-list-item-title>设置无线热点</v-list-item-title>
-        <v-list-item-subtitle>注意：该热点无法接入互联网，仅用于管理</v-list-item-subtitle>
+        <v-list-item-subtitle
+          >注意：该热点无法接入互联网，仅用于管理</v-list-item-subtitle
+        >
         <v-row justify="start">
           <v-col cols="12" md="8">
-            <v-form
-              v-model="apValid"
-              ref="apForm"
-              @submit.prevent="submitAp"
-            >
+            <v-form v-model="apValid" ref="apForm" @submit.prevent="submitAp">
               <v-text-field
                 v-model="apSsid"
                 :rules="requiredRules"
