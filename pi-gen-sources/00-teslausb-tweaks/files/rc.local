@@ -91,6 +91,16 @@ then
   mv /boot/teslausb_setup_variables.conf /root/
   dos2unix /root/teslausb_setup_variables.conf
 fi
+# Replace new config by WebUI admin.
+if [ -e "/mutable/configs/teslausb_setup_variables.conf" ]
+then
+  cp /mutable/configs/teslausb_setup_variables.conf /root/teslausb_setup_variables.conf
+fi
+if [ -e "/root/teslausb_setup_variables.conf" ] && [ ! -e  "/mutable/configs/teslausb_setup_variables.conf" ]
+then
+  cp /root/teslausb_setup_variables.conf /mutable/conefigs/teslausb_setup_variables.conf
+fi
+
 if [ -e "/root/teslausb_setup_variables.conf" ]
 then
   source "/root/teslausb_setup_variables.conf"

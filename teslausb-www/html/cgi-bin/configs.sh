@@ -18,10 +18,9 @@ wifi_pass=$(get_config_field "WIFIPASS")
 
 # Rclone
 function get_rclone_config() {
-  < /root/.config/rclone/rclone.conf grep -e "$1=*" | awk -F '=' '{print $2}'
+  < "$RCLONE_CONFIG_FILE" grep -e "$1=*" | awk -F '=' '{print $2}'
 }
-rclone_conf_file="/root/.config/rclone/rclone.conf"
-if [[ -e $rclone_conf_file ]]; then
+if [[ -e $RCLONE_CONFIG_FILE ]]; then
   provider=$(get_rclone_config "provider")
   bucket=$(get_config_field "RCLONE_PATH")
   key_id=$(get_rclone_config "access_key_id")

@@ -3,8 +3,10 @@
 # shellcheck disable=SC2034
 
 # Teslausb config file path
-CONFIG_FILE=/root/teslausb_setup_variables.conf
+export CONFIG_FILE=/mutable/configs/teslausb_setup_variables.conf
 
 # Sqlite DB file path
-DB_FILE_PATH=/var/www/teslausb.db
+export DB_FILE_PATH=/var/www/teslausb.db
 
+# Rclone config
+export RCLONE_CONFIG_FILE=/mutable/configs/rclone/rclone.conf

@@ -15,7 +15,7 @@ function log_progress () {
 
 function verify_configuration () {
     log_progress "Verifying rclone configuration..."
-    if ! [ -e "/root/.config/rclone/rclone.conf" ]
+    if ! [ -e "/root/.config/rclone/rclone.conf" ] && ! [ -e "/mutable/configs/rclone/rclone.conf" ]
     then
         log_progress "STOP: rclone config was not found. did you configure rclone correctly?"
         exit 1
