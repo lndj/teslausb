@@ -48,9 +48,9 @@ function set_config_field() {
   then
     /root/bin/remountfs_rw
   fi
-
-  TMP_CONFIG_FILE=/tmp/teslausb_setup_variables.conf
-  cp "$CONFIG_FILE" "$TMP_CONFIG_FILE"
+  TMP_CONFIG_FILE=/mutable/configs/teslausb_setup_variables.conf
+  sudo cp "$CONFIG_FILE" "$TMP_CONFIG_FILE"
+  sudo chmod o+w "/mutable/configs"
 
   if grep -e "^export $key=.*" "$TMP_CONFIG_FILE" &> /dev/null; then
     debug_log "Find the config, replace it with new content, name=$key,value=$value,value_quote=$value_quote"
@@ -72,8 +72,7 @@ function set_config_field() {
     fi
     echo "$conf" >>  "$TMP_CONFIG_FILE"
   fi
-  
-  cp "$TMP_CONFIG_FILE" "$CONFIG_FILE"
+  sudo cp "$TMP_CONFIG_FILE" "$CONFIG_FILE"
 }
 
 function get_config_field() {
