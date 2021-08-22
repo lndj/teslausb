@@ -120,7 +120,7 @@ function check_archive_configs () {
             ;;
         rclone)
             check_variable "RCLONE_DRIVE"
-            check_variable "RCLONE_PATH"
+            # check_variable "RCLONE_PATH"
             export ARCHIVE_SERVER="8.8.8.8" # since it's a cloud hosted drive we'll just set this to google dns
             check_rclone
             ;;
