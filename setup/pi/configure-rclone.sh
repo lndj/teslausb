@@ -16,7 +16,7 @@ version=$(rclone --version 2>>errors | head -n 1)
 if [ -n "$version" ]; then
     setup_progress "The version of rclone ${version} is already installed."
 else
-  download_link="https://downloads.rclone.org/rclone-current-linux-arm.zip"
+  download_link="https://teslausb-resource.oss-cn-shanghai.aliyuncs.com/rclone-current-linux-arm.zip"
   rclone_zip="rclone-current-linux-arm.zip"
   curlwrapper -o "$rclone_zip" "$download_link"
   unzip_dir="tmp_unzip_dir_for_rclone"
@@ -38,5 +38,7 @@ else
   version=$(rclone --version 2>>errors | head -n 1)
   setup_progress "rclone ${version} has successfully installed."
 fi
+
+touch /mutable/configs/rclone/rclone.conf
 
 setup_progress "done install rclone"
