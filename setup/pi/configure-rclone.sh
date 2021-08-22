@@ -39,7 +39,7 @@ else
   setup_progress "rclone ${version} has successfully installed."
 fi
 
-mkdir -p /mutable/configs
+mkdir -p /mutable/configs/rclone
 touch /mutable/configs/rclone/rclone.conf
 
 setup_progress "done install rclone"

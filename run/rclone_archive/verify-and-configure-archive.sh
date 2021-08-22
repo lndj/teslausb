@@ -22,7 +22,7 @@ function verify_configuration () {
     fi
 
     # todo 考虑如果还没有配置的时候咋办
-    if [[ -n $RCLONE_PATH ]]
+    if [[ -n ${RCLONE_PATH:-} ]]
     then
       if ! rclone lsd "$RCLONE_DRIVE:$RCLONE_PATH" > /dev/null
       then
