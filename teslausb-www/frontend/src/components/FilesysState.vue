@@ -7,7 +7,6 @@
     <v-row align="start" justify="center">
       <v-col class="text-center top-distance" cols="12">
         <h1 class="text-h4 font-weight-thin mb-4">My Tesla USB</h1>
-        <h4 class="subheading">This page is building, just a demo.</h4>
         <h4 class="subheading">Os: {{ os }}</h4>
         <h4 class="subheading">Hardware: {{ hardware }}</h4>
       </v-col>

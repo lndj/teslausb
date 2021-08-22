@@ -23,7 +23,8 @@ EOF
 }
 
 function check_config_file() {
-  if [[ ! -e $CONFIG_FILE ]]; then
+  if [ ! -e "$CONFIG_FILE" ]
+  then
     response_json_with_msg "$SYSTEM_ERROR" "Something error, config file is not exists."
     exit 1
   fi
@@ -43,10 +44,9 @@ function set_config_field() {
   value_quote=${3:-0}
   new_conf_doc_tip=$4
 
-  sudo -i
   if [ -e /root/bin/remountfs_rw ]
   then
-    /root/bin/remountfs_rw
+    /root/bin/remountfs_rw > /dev/null 2>&1
   fi
   TMP_CONFIG_FILE=/mutable/configs/teslausb_setup_variables.conf
   sudo cp "$CONFIG_FILE" "$TMP_CONFIG_FILE"

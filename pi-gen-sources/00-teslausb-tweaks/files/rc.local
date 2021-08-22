@@ -31,6 +31,8 @@ function set_domain_hosts {
   domain=$1
   setup_progress "Configuring DNS for $1"
   dig +time=2 +retry=1 +tries=2 "$domain" @8.8.8.8 | grep "^$domain" | awk '{print $5, $1}' | sed 's/.$//g' >> /etc/hosts
+  hosts=$(cat /etc/hosts)
+  setup_progress "Current hosts: $hosts"
 }
 
 function get_script () {
@@ -50,7 +52,7 @@ function enable_wifi () {
   setup_progress "Detecting whether to update wpa_supplicant.conf"
   if [[ -n "$SSID" ]] && [[ -n "$WIFIPASS" ]]
   then
-    if [ ! -e /boot/WIFI_ENABLED ] || [ -e /boot/WIFI_CONFIG_CHANGED ]
+    if [ ! -e /boot/WIFI_ENABLED ]
     then
       if [ -e /root/bin/remountfs_rw ]
       then
@@ -73,7 +75,6 @@ function enable_wifi () {
       fi
 
       touch /boot/WIFI_ENABLED
-      rm -rf /boot/WIFI_CONFIG_CHANGED
       setup_progress "Rebooting..."
       exec reboot
     fi

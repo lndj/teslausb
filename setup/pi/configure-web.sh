@@ -33,6 +33,10 @@ ln -sf /etc/nginx/sites-available/teslausb.nginx /etc/nginx/sites-enabled/defaul
 tar -zxvf "$SOURCE_DIR/teslausb-www/frontend/dist.tar.gz"
 mv dist/ /var/www/html
 
+# init the admin user
+chmod +x /var/www/html/cgi-bin/init.sh
+/var/www/html/cgi-bin/init.sh
+
 # install the fuse layer needed to work around an incompatibility
 # between Chrome and Tesla's recordings
 g++ -o /root/cttseraser -D_FILE_OFFSET_BITS=64 "$SOURCE_DIR/teslausb-www/cttseraser.cpp" -lstdc++ -lfuse

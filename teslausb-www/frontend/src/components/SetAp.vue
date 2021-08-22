@@ -9,7 +9,7 @@
         >
         <v-row justify="start">
           <v-col cols="12" md="8">
-            <v-form v-model="apValid" ref="apForm" @submit.prevent="submitAp">
+            <v-form v-model="apValid" ref="apForm" lazy-validation @submit.prevent="submitAp">
               <v-text-field
                 v-model="apSsid"
                 :rules="requiredRules"
