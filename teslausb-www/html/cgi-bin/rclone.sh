@@ -6,7 +6,6 @@ source "$SHELL_FOLDER/env.sh"
 source "$SHELL_FOLDER/util.sh"
 
 check_login
-check_config_file
 
 bucket=${_POST['bucket']} # my-tesla-dashcam
 provider=${_POST['provider']} # Alibaba
@@ -25,9 +24,7 @@ set_config_field "RCLONE_PATH" "$bucket" 1
 # set_config_field "RCLONE_FLAGS" ""
 
 BAK_CONFIG="/tmp/rclone.conf"
-if [[ -f $RCLONE_CONFIG_FILE ]]; then
-  cp "$RCLONE_CONFIG_FILE" "$BAK_CONFIG"
-fi
+sudo cp "$RCLONE_CONFIG_FILE" "$BAK_CONFIG"
 
 sudo mkdir -p /root/.config/rclone
 conf=$(cat <<EOF
@@ -42,16 +39,18 @@ EOF
 echo "$conf" | sudo tee "$RCLONE_CONFIG_FILE" > /dev/null
 
 function res_failed() {
-  rm -f "$RCLONE_CONFIG_FILE"
-  mv "$BAK_CONFIG" "$RCLONE_CONFIG_FILE"
+  sudo rm -f "$RCLONE_CONFIG_FILE"
+  sudo mv "$BAK_CONFIG" "$RCLONE_CONFIG_FILE"
   response_json_with_msg "$PARAM_ERROR" "$1"
 }
 
-if ! rclone --config "$RCLONE_CONFIG_FILE" lsd "oss:$bucket" > /dev/null
+# Fix permission error
+sudo cp "$RCLONE_CONFIG_FILE" /tmp/r.conf
+sudo chmod a+r /tmp/r.conf
+if ! rclone --config /tmp/r.conf lsd "oss:$bucket" > /dev/null
 then
     res_failed "配置错误，请检查"
     exit 1
 fi
 
-rm -f "$BAK_CONFIG"
 response_json_with_msg "$OK" "Set rclone config success"
