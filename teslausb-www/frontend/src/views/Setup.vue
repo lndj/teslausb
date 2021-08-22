@@ -94,7 +94,7 @@
 
     <v-divider></v-divider>
     
-    <set-ap />
+    <!-- <set-ap /> -->
 
     <v-overlay :value="loading">
       <v-progress-circular
@@ -114,14 +114,14 @@
 import request from "@/utils/request";
 import Reboot from '../components/Reboot.vue';
 import SetNotification from '../components/SetNotification.vue';
-import SetAp from '../components/SetAp.vue';
+// import SetAp from '../components/SetAp.vue';
 
 export default {
   name: "Setup",
   components: {
     Reboot,
     SetNotification,
-    SetAp,
+    // SetAp,
   },
   data: () => ({
     loading: false,

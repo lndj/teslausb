@@ -6,7 +6,7 @@ import Cookies from "js-cookie"
 const service = axios.create({
   // baseURL: 'http://localhost:8090',
   withCredentials: true, // send cookies when cross-domain requests
-  timeout: 40000, // request timeout
+  // timeout: 40000, // request timeout
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded',
     'Access-Control-Allow-Origin': '*'

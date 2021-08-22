@@ -21,10 +21,14 @@ function verify_configuration () {
         exit 1
     fi
 
-    if ! rclone lsd "$RCLONE_DRIVE:$RCLONE_PATH" > /dev/null
+    # todo 考虑如果还没有配置的时候咋办
+    if [[ -n $RCLONE_PATH ]]
     then
-        log_progress "STOP: Could not find the $RCLONE_DRIVE:$RCLONE_PATH"
-        exit 1
+      if ! rclone lsd "$RCLONE_DRIVE:$RCLONE_PATH" > /dev/null
+      then
+          log_progress "STOP: Could not find the $RCLONE_DRIVE:$RCLONE_PATH"
+          exit 1
+      fi
     fi
 }
 
