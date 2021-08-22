@@ -29,8 +29,8 @@ if [[ -f $RCLONE_CONFIG_FILE ]]; then
   cp "$RCLONE_CONFIG_FILE" "$BAK_CONFIG"
 fi
 
-mkdir -p /mutable/configs/rclone
-cat <<- EOF > "$RCLONE_CONFIG_FILE"
+sudo mkdir -p /root/.config/rclone
+conf=$(cat <<EOF
 [oss]
 type=s3
 provider=$provider
@@ -38,6 +38,8 @@ access_key_id=$key_id
 secret_access_key=$access_key
 endpoint=$endpoint
 EOF
+)
+echo "$conf" | sudo tee "$RCLONE_CONFIG_FILE" > /dev/null
 
 function res_failed() {
   rm -f "$RCLONE_CONFIG_FILE"

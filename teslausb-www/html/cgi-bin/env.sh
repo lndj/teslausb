@@ -9,4 +9,4 @@ export CONFIG_FILE=/root/teslausb_setup_variables.conf
 export DB_FILE_PATH=/var/www/teslausb.db
 
 # Rclone config
-export RCLONE_CONFIG_FILE=/mutable/configs/rclone/rclone.conf
+export RCLONE_CONFIG_FILE=/root/.config/rclone/rclone.conf
