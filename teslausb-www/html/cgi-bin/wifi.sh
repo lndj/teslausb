@@ -17,12 +17,13 @@ fi
 function change_wifi () {
   if [ -e /root/bin/remountfs_rw ]
   then
-    sudo /root/bin/remountfs_rw > /dev/null 2>&1
+    sudo /root/bin/remountfs_rw > /dev/null
   fi
   sudo cp /boot/wpa_supplicant.conf.sample /boot/wpa_supplicant.conf
   sudo sed -i -e "sTEMPSSID${ssid}g" /boot/wpa_supplicant.conf
   sudo sed -i -e "sTEMPPASS${wifi_pass}g" /boot/wpa_supplicant.conf
   sudo cp /boot/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
+  sudo sed -i -e 's/}/  id_str="AP1"\n}/'  /etc/wpa_supplicant/wpa_supplicant.conf
 }
 
 change_wifi
