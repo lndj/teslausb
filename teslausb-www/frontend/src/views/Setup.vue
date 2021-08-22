@@ -153,6 +153,7 @@ export default {
       if (!this.$refs.wifiForm.validate()) {
         return;
       }
+      this.loading = true;
       const formData = {
         ssid: this.ssid,
         wifi_pass: this.wifiPass,
@@ -163,6 +164,7 @@ export default {
         data: formData,
       })
         .then((res) => {
+          this.loading = false;
           if (res.code === 0) {
             this.$snackbar({
               content: "WiFi 配置保存成功，重启后生效",
@@ -179,6 +181,7 @@ export default {
           }
         })
         .catch((err) => {
+          this.loading = false;
           console.log("WiFi config error: ", err.message);
         });
     },

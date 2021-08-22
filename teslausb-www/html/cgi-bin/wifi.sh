@@ -6,7 +6,6 @@ source "$SHELL_FOLDER/env.sh"
 source "$SHELL_FOLDER/util.sh"
 
 check_login
-# check_config_file
 
 ssid=${_POST['ssid']}
 wifi_pass=${_POST['wifi_pass']}
