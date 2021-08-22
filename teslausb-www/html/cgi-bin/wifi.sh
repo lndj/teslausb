@@ -23,7 +23,7 @@ function change_wifi () {
   sudo sed -i -e "sTEMPSSID${ssid}g" /boot/wpa_supplicant.conf
   sudo sed -i -e "sTEMPPASS${wifi_pass}g" /boot/wpa_supplicant.conf
   sudo cp /boot/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
-  sudo sed -i -e 's/}/  id_str="AP1"\n}/'  /etc/wpa_supplicant/wpa_supplicant.conf
+  sudo sed -i -e 's/}/  id_str="AP1"\n}/' /etc/wpa_supplicant/wpa_supplicant.conf
 }
 
 change_wifi

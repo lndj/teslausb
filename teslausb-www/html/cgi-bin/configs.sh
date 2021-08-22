@@ -8,13 +8,14 @@ source "$SHELL_FOLDER/env.sh"
 source "$SHELL_FOLDER/util.sh"
 
 check_login
-check_config_file
+# check_config_file
 
 type=${_GET['type']}
 
 # WiFi
-ssid=$(get_config_field "SSID")
-wifi_pass=$(get_config_field "WIFIPASS")
+wifi_conf=$(sudo cat /etc/wpa_supplicant/wpa_supplicant.conf)
+ssid=$(echo "$wifi_conf" | grep -e "ssid=*" | awk -F '=' '{print $2}' | head -n 1 | tr -d '"')
+wifi_pass=$(echo "$wifi_conf" | grep -e "psk=*" | awk -F '=' '{print $2}' | head -n 1 | tr -d '"')
 
 # Rclone
 function get_rclone_config() {
