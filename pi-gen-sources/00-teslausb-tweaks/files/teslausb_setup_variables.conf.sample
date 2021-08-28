@@ -242,3 +242,7 @@ export WIFIPASS='your_pass'
 
 # Fix dns error in China when getting script from github
 # export FIX_DNS_CACHE_POISONING=true
+
+# Uncomment this to disable use github mirror
+# Mirror: raw.githubusercontents.com
+# export USE_GITHUB_MIRROR=false

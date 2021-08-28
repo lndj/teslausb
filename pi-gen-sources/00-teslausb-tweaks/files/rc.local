@@ -30,6 +30,7 @@ function setup_progress () {
 function set_domain_hosts {
   domain=$1
   setup_progress "Configuring DNS for $1"
+  sed -i "/$domain/d" /etc/hosts
   dig +time=2 +retry=1 +tries=2 "$domain" @8.8.8.8 | grep "^$domain" | awk '{print $5, $1}' | sed 's/.$//g' >> /etc/hosts
   hosts=$(cat /etc/hosts)
   setup_progress "Current hosts: $hosts"
@@ -40,7 +41,13 @@ function get_script () {
   local name="$2"
   local remote_path="${3:-}"
 
-  while ! curl -o "$local_path/$name" https://raw.githubusercontent.com/"$REPO"/teslausb/"$BRANCH"/"$remote_path"/"$name"
+  raw_url='raw.githubusercontent.com'
+  USE_GITHUB_MIRROR=${USE_GITHUB_MIRROR:-true}
+  if [ "$USE_GITHUB_MIRROR" = "true" ]
+  then
+    raw_url='raw.githubusercontents.com'
+  fi
+  while ! curl -o "$local_path/$name" https://"$raw_url"/"$REPO"/teslausb/"$BRANCH"/"$remote_path"/"$name"
   do
     setup_progress "get_script failed, retrying"
     sleep 3
@@ -108,6 +115,14 @@ fi
 enable_wifi
 # Good to start setup at this point
 
+# If use fix DNS, set it
+FIX_DNS_CACHE_POISONING=${FIX_DNS_CACHE_POISONING:-true}
+if [ "$FIX_DNS_CACHE_POISONING" = "true" ]
+then
+  set_domain_hosts "raw.githubusercontent.com"
+  set_domain_hosts "github.com"
+fi
+
 # This begins the Headless Setup loop
 # If the FINISHED file does not exist then we start setup. Otherwise passes on to normal loop
 if [ ! -e "/boot/TESLAUSB_SETUP_FINISHED" ]
@@ -143,14 +158,6 @@ then
   then
     REPO=${REPO:-lndj}
     BRANCH=${BRANCH:-main-dev}
-
-    # If use fix DNS, set it
-    FIX_DNS_CACHE_POISONING=${FIX_DNS_CACHE_POISONING:-true}
-    if [ "$FIX_DNS_CACHE_POISONING" = "true" ]
-    then
-      set_domain_hosts "raw.githubusercontent.com"
-      set_domain_hosts "github.com"
-    fi
 
     # Script doesn't exist, grab it.
     setup_progress "Grabbing main setup file."

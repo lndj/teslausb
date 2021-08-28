@@ -89,6 +89,7 @@ export default {
   },
   methods: {
     submitNotification() {
+      this.$emit('setLoading', true);
       request({
         url: "/cgi-bin/notification.sh",
         method: "post",
@@ -103,6 +104,7 @@ export default {
         },
       })
         .then((res) => {
+          this.$emit('setLoading', false);
           if (res.code === 0) {
             this.$snackbar({
               content: "保存成功，重启后生效",
@@ -112,6 +114,7 @@ export default {
           }
         })
         .catch((err) => {
+          this.$emit('setLoading', false);
           this.$snackbar({
             content: "保存失败：" + err.message,
             centered: true,

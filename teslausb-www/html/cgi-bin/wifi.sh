@@ -15,10 +15,7 @@ if [[ -z $ssid || -z $wifi_pass ]]; then
 fi
 
 function change_wifi () {
-  if [ -e /root/bin/remountfs_rw ]
-  then
-    sudo /root/bin/remountfs_rw > /dev/null
-  fi
+  sudo /root/bin/remountfs_rw > /dev/null
   sudo cp /boot/wpa_supplicant.conf.sample /boot/wpa_supplicant.conf
   sudo sed -i -e "sTEMPSSID${ssid}g" /boot/wpa_supplicant.conf
   sudo sed -i -e "sTEMPPASS${wifi_pass}g" /boot/wpa_supplicant.conf
@@ -27,10 +24,5 @@ function change_wifi () {
 }
 
 change_wifi
-
-# set_config_field "SSID" "$ssid" 1 "WiFi"
-# set_config_field "WIFIPASS" "$wifi_pass" 1
-
-# sudo rm -f /boot/WIFI_ENABLED
 
 response_json_with_msg "$OK" "Wifi config change success"

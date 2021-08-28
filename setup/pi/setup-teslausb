@@ -421,7 +421,13 @@ function set_timezone () {
       ln -sf "/usr/share/zoneinfo/$TIME_ZONE" /etc/localtime
     elif [ "$TIME_ZONE" = "auto" ]
     then
-      if curlwrapper -o /root/bin/tzupdate.py https://raw.githubusercontent.com/marcone/tzupdate/develop/tzupdate.py
+      raw_url='raw.githubusercontent.com'
+      USE_GITHUB_MIRROR=${USE_GITHUB_MIRROR:-true}
+      if [ "$USE_GITHUB_MIRROR" = "true" ]
+      then
+        raw_url='raw.githubusercontents.com'
+      fi
+      if curlwrapper -o /root/bin/tzupdate.py https://"$raw_url"/marcone/tzupdate/develop/tzupdate.py
       then
         apt-get -y --force-yes install python-requests
         chmod +x /root/bin/tzupdate.py

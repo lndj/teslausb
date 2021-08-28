@@ -8,26 +8,54 @@ source "$SHELL_FOLDER/env.sh"
 source "$SHELL_FOLDER/util.sh"
 
 check_login
-# check_config_file
 
 type=${_GET['type']}
 
 # WiFi
-wifi_conf=$(sudo cat /etc/wpa_supplicant/wpa_supplicant.conf)
-ssid=$(echo "$wifi_conf" | grep -e "ssid=*" | awk -F '=' '{print $2}' | head -n 1 | tr -d '"')
-wifi_pass=$(echo "$wifi_conf" | grep -e "psk=*" | awk -F '=' '{print $2}' | head -n 1 | tr -d '"')
+if [[ $type == 'wifi' ]]; then
+  wifi_conf=$(sudo cat /etc/wpa_supplicant/wpa_supplicant.conf)
+  ssid=$(echo "$wifi_conf" | grep -e "ssid=*" | awk -F '=' '{print $2}' | head -n 1 | tr -d '"')
+  wifi_pass=$(echo "$wifi_conf" | grep -e "psk=*" | awk -F '=' '{print $2}' | head -n 1 | tr -d '"')
+  res_data=$(cat <<EOF
+  {
+    "ssid":"$ssid",
+    "wifi_pass":"$wifi_pass",
+  }
+EOF
+)
+  res=$(res_body "$OK" "$res_data" "ok")
+  response_json "$res"
+  exit 0
+fi
 
 # Rclone
-function get_rclone_config() {
-  < "$RCLONE_CONFIG_FILE" grep -e "$1=*" | awk -F '=' '{print $2}'
-}
-if [[ -e $RCLONE_CONFIG_FILE ]]; then
-  provider=$(get_rclone_config "provider")
-  bucket=$(get_config_field "RCLONE_PATH")
-  key_id=$(get_rclone_config "access_key_id")
-  access_key=$(get_rclone_config "secret_access_key")
-  endpoint=$(get_rclone_config "endpoint")
+if [[ $type == 'rclone' ]]; then
+  rclone_conf=$(sudo cat "$RCLONE_CONFIG_FILE")
+  function get_rclone_config() {
+    echo "$rclone_conf" | grep -e "$1=*" | awk -F '=' '{print $2}'
+  }
+  if [[ -e $RCLONE_CONFIG_FILE ]]; then
+    provider=$(get_rclone_config "provider")
+    bucket=$(get_config_field "RCLONE_PATH")
+    key_id=$(get_rclone_config "access_key_id")
+    access_key=$(get_rclone_config "secret_access_key")
+    endpoint=$(get_rclone_config "endpoint")
+  fi
+  res_data=$(cat <<EOF
+  {
+    "provider":"$provider",
+    "bucket":"$bucket",
+    "key_id":"$key_id",
+    "access_key":"$access_key",
+    "endpoint":"$endpoint"
+  }
+EOF
+)
+  res=$(res_body "$OK" "$res_data" "ok")
+  response_json "$res"
+  exit 0
 fi
+
 
 # Ap
 if [[ $type == 'ap' ]]; then
@@ -98,18 +126,3 @@ EOF
   response_json "$res"
   exit 0
 fi
-
-res_data=$(cat <<EOF
-  {
-    "ssid":"$ssid",
-    "wifi_pass":"$wifi_pass",
-    "provider":"$provider",
-    "bucket":"$bucket",
-    "key_id":"$key_id",
-    "access_key":"$access_key",
-    "endpoint":"$endpoint"
-  }
-EOF
-)
-res=$(res_body "$OK" "$res_data" "ok")
-response_json "$res"
