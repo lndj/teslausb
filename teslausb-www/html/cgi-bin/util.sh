@@ -44,10 +44,8 @@ function set_config_field() {
   value_quote=${3:-0}
   new_conf_doc_tip=$4
 
-  if [ -e /root/bin/remountfs_rw ]
-  then
-    /root/bin/remountfs_rw > /dev/null 2>&1
-  fi
+  sudo /root/bin/remountfs_rw > /dev/null
+
   TMP_CONFIG_FILE=/mutable/configs/teslausb_setup_variables.conf
   sudo cp "$CONFIG_FILE" "$TMP_CONFIG_FILE"
   sudo chmod o+w "/mutable/configs"

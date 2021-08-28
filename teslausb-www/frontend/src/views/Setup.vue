@@ -26,6 +26,7 @@
     </v-overlay>
 
     <reboot></reboot>
+    
     <br /><br /><br /><br />
   </v-card>
 </template>
