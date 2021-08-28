@@ -10,7 +10,7 @@
 
     <v-divider></v-divider>
 
-    <set-notification @setLoading="setLoading" />
+    <set-notification @setLoading="setLoading"></set-notification>
 
     <v-divider></v-divider>
 
@@ -36,6 +36,7 @@ import Reboot from "../components/Reboot.vue";
 import SetNotification from "../components/SetNotification.vue";
 import SetWifi from "../components/SetWifi.vue";
 import SetRclone from "../components/SetRclone.vue";
+import FilesysState from "../components/FilesysState.vue";
 // import SetAp from '../components/SetAp.vue';
 
 export default {
@@ -45,6 +46,7 @@ export default {
     SetNotification,
     SetWifi,
     SetRclone,
+    FilesysState,
     // SetAp,
   },
   data: () => ({

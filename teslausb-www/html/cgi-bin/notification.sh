@@ -6,7 +6,6 @@ source "$SHELL_FOLDER/env.sh"
 source "$SHELL_FOLDER/util.sh"
 
 check_login
-check_config_file
 
 type=${_POST['type']}
 if [[ -z $type ]]; then
