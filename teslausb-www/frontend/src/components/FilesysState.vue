@@ -14,32 +14,34 @@
     <v-row align="start" justify="center">
       <v-col class="text-center" cols="6">
         <v-card class="mx-auto" shaped style="padding: 10px; opacity: 0.5">
-          <v-progress-circular
-            :rotate="360"
-            :size="100"
-            :width="15"
-            :value="value"
-            color="primary"
-          >
-            {{ value }}
-          </v-progress-circular>
-          <br /><br />
-          <div class="text font-weight-thin mb-1">记录仪：{{ camSize }}</div>
+          <v-list-item two-line>
+            <v-list-item-content>
+              <v-list-item-title class="text-h5">
+                记录仪
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-card-text>
+            <v-row align="center">
+              <v-col class="text-h2" cols="12">{{ camSize }}</v-col>
+            </v-row>
+          </v-card-text>
         </v-card>
       </v-col>
       <v-col class="text-center" cols="6">
-        <v-card class="mx-auto" shaped style="padding: 10px; opacity: 0.4">
-          <v-progress-circular
-            :rotate="360"
-            :size="100"
-            :width="15"
-            :value="value"
-            color="pink"
-          >
-            {{ value }}
-          </v-progress-circular>
-          <br /><br />
-          <div class="text font-weight-thin mb-1">音乐：{{ musicSize }}</div>
+        <v-card class="mx-auto" shaped style="padding: 10px; opacity: 0.5">
+          <v-list-item two-line>
+            <v-list-item-content>
+              <v-list-item-title class="text-h5">
+                音乐
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-card-text>
+            <v-row align="center">
+              <v-col class="text-h2" cols="12">{{ musicSize }}</v-col>
+            </v-row>
+          </v-card-text>
         </v-card>
       </v-col>
     </v-row>
@@ -53,9 +55,8 @@ export default {
   name: "FilesysState",
   computed: {},
   data: () => ({
-    value: 80,
-    camSize: '',
-    musicSize: '',
+    camSize: "",
+    musicSize: "",
     os: null,
     hardware: null,
   }),
@@ -66,7 +67,7 @@ export default {
     loadState() {
       request({
         url: "/cgi-bin/dashboard.sh",
-        method: "get"
+        method: "get",
       })
         .then((res) => {
           if (res.code === 0) {

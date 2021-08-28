@@ -25,6 +25,7 @@
       <div class="text-caption">正在保存中...</div>
     </v-overlay>
 
+    <br />
     <reboot></reboot>
 
     <br /><br /><br /><br />
