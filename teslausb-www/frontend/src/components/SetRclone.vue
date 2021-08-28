@@ -122,7 +122,7 @@ export default {
         url: "/cgi-bin/configs.sh",
         method: "get",
         params: {
-          type: "wifi",
+          type: "rclone",
         },
       })
         .then((res) => {

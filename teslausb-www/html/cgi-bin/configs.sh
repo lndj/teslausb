@@ -19,7 +19,7 @@ if [[ $type == 'wifi' ]]; then
   res_data=$(cat <<EOF
   {
     "ssid":"$ssid",
-    "wifi_pass":"$wifi_pass",
+    "wifi_pass":"$wifi_pass"
   }
 EOF
 )

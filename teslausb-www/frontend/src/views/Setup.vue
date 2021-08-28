@@ -1,19 +1,19 @@
 <template>
   <v-card class="mx-auto">
     <v-spacer></v-spacer>
-    
+
     <set-wifi @setLoading="setLoading"></set-wifi>
 
     <v-divider></v-divider>
 
-    <set-rclone></set-rclone>
+    <set-rclone @setLoading="setLoading"></set-rclone>
 
     <v-divider></v-divider>
 
-    <set-notification />
+    <set-notification @setLoading="setLoading" />
 
     <v-divider></v-divider>
-    
+
     <!-- <set-ap /> -->
 
     <v-overlay :value="loading">
@@ -26,16 +26,16 @@
     </v-overlay>
 
     <reboot></reboot>
-    <br><br><br><br>
+    <br /><br /><br /><br />
   </v-card>
 </template>
 
 <script>
 // import request from "@/utils/request";
-import Reboot from '../components/Reboot.vue';
-import SetNotification from '../components/SetNotification.vue';
-import SetWifi from '../components/SetWifi.vue';
-import SetRclone from '../components/SetRclone.vue';
+import Reboot from "../components/Reboot.vue";
+import SetNotification from "../components/SetNotification.vue";
+import SetWifi from "../components/SetWifi.vue";
+import SetRclone from "../components/SetRclone.vue";
 // import SetAp from '../components/SetAp.vue';
 
 export default {
@@ -50,13 +50,11 @@ export default {
   data: () => ({
     loading: false,
   }),
-  mounted() {
-    
-  },
+  mounted() {},
   methods: {
     setLoading(status) {
       this.loading = status;
-    }
+    },
   },
 };
 </script>
