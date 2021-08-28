@@ -34,13 +34,11 @@ if [[ $type == 'rclone' ]]; then
   function get_rclone_config() {
     echo "$rclone_conf" | grep -e "$1=*" | awk -F '=' '{print $2}'
   }
-  if [[ -e $RCLONE_CONFIG_FILE ]]; then
-    provider=$(get_rclone_config "provider")
-    bucket=$(get_config_field "RCLONE_PATH")
-    key_id=$(get_rclone_config "access_key_id")
-    access_key=$(get_rclone_config "secret_access_key")
-    endpoint=$(get_rclone_config "endpoint")
-  fi
+  provider=$(get_rclone_config "provider")
+  bucket=$(get_config_field "RCLONE_PATH")
+  key_id=$(get_rclone_config "access_key_id")
+  access_key=$(get_rclone_config "secret_access_key")
+  endpoint=$(get_rclone_config "endpoint")
   res_data=$(cat <<EOF
   {
     "provider":"$provider",

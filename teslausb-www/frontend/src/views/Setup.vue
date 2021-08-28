@@ -26,7 +26,7 @@
     </v-overlay>
 
     <reboot></reboot>
-    
+
     <br /><br /><br /><br />
   </v-card>
 </template>
@@ -37,7 +37,6 @@ import Reboot from "../components/Reboot.vue";
 import SetNotification from "../components/SetNotification.vue";
 import SetWifi from "../components/SetWifi.vue";
 import SetRclone from "../components/SetRclone.vue";
-import FilesysState from "../components/FilesysState.vue";
 // import SetAp from '../components/SetAp.vue';
 
 export default {
@@ -47,7 +46,6 @@ export default {
     SetNotification,
     SetWifi,
     SetRclone,
-    FilesysState,
     // SetAp,
   },
   data: () => ({
