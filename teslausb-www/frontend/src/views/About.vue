@@ -30,10 +30,10 @@
           <strong v-if="currentVersion">
             {{ currentVersion }}
           </strong>
-          <span class="text-caption" v-if="!currentVersion && checking">
+          <span class="text-caption" v-if="currentVersionLoading">
             获取中...
           </span>
-          <span class="text-caption" style="color: red" v-if="!currentVersion && !checking">
+          <span class="text-caption" style="color: red" v-if="!currentVersion && !currentVersionLoading">
             获取出错
           </span>
           <v-tooltip bottom>
@@ -69,10 +69,16 @@
         </p>
         <p
           class="subheading font-weight-regular"
-          v-if="!checking && newVersion && newVersion !== currentVersion"
+          v-if="!checking && newVersion && newVersion !== currentVersion && !upgradeStarted"
         >
           您有新版本可升级，新版本：{{ newVersion }}
           <v-btn text color="primary" @click="confirmUpgradeDialog=true"> 点我升级 </v-btn>
+        </p>
+        <p
+          class="subheading font-weight-regular"
+          v-if="upgradeStarted"
+        >
+          当前已开始在后台进行升级，升级过程中，请保持电源和网络连接，待设备重启后，即为升级成功。
         </p>
       </v-col>
 
@@ -149,9 +155,11 @@ export default {
   name: "About",
 
   data: () => ({
+    currentVersionLoading: false,
     currentVersion: null,
     checking: false,
     upgradeProcess: false,
+    upgradeStarted: false,
     newVersion: null,
     ecosystem: [
       {
@@ -170,6 +178,7 @@ export default {
   },
   methods: {
     getCurrentVersion() {
+      this.currentVersionLoading = true;
       request({
         url: "/cgi-bin/upgrade.sh",
         method: "get",
@@ -178,6 +187,7 @@ export default {
         },
       })
         .then((res) => {
+          this.currentVersionLoading = false;
           if (res.code === 0) {
             this.currentVersion = res.data.cur_version;
           } else {
@@ -189,6 +199,7 @@ export default {
           }
         })
         .catch((err) => {
+          this.currentVersionLoading = false;
           this.$snackbar({
             content: "获取当前版本出错：" + err.message,
             top: true,
@@ -230,7 +241,6 @@ export default {
     },
     upgrade() {
       this.confirmUpgradeDialog = false;
-
       this.upgradeProcess = true;
       request({
         url: "/cgi-bin/upgrade.sh",
@@ -242,7 +252,12 @@ export default {
         .then((res) => {
           this.upgradeProcess = false;
           if (res.code === 0) {
-            this.newVersion = res.data.new_version;
+            this.upgradeStarted = true;
+            this.$snackbar({
+              content: '已在后台开始升级，请耐心等待',
+              centered: true,
+              color: "green",
+            });
           } else {
             this.$snackbar({
               content: "升级失败：" + res.msg,
