@@ -21,9 +21,9 @@
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <v-card-text>
+          <v-card-text style="padding: 10px">
             <v-row align="center">
-              <v-col class="text-h2" cols="12">{{ camSize }}</v-col>
+              <v-col class="text-h4" cols="12">{{ camSize }}</v-col>
             </v-row>
           </v-card-text>
         </v-card>
@@ -37,9 +37,9 @@
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <v-card-text>
+          <v-card-text style="padding: 10px">
             <v-row align="center">
-              <v-col class="text-h2" cols="12">{{ musicSize }}</v-col>
+              <v-col class="text-h4" cols="12">{{ musicSize }}</v-col>
             </v-row>
           </v-card-text>
         </v-card>

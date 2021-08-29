@@ -508,6 +508,7 @@ function cmd_upgrade {
     echo "STOP: previous setup didn't finish, can't upgrade unfinished install"
     exit 1
   fi
+  setup_progress "starting for full upgrade"
   get_script /tmp setup-teslausb setup/pi &> /dev/null
   exec bash -c "/tmp/setup-teslausb upgrade_prepare && /tmp/setup-teslausb && /tmp/setup-teslausb upgrade_finish" < /dev/null
 }
