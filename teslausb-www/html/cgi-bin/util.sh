@@ -6,9 +6,27 @@ LOGIN_ERROR=102
 SYSTEM_ERROR=103
 OK=0
 
+function get_script () {
+  local local_path="$1"
+  local name="$2"
+  local remote_path="${3:-}"
+
+  raw_url='raw.githubusercontent.com'
+  USE_GITHUB_MIRROR=${USE_GITHUB_MIRROR:-true}
+  if [ "$USE_GITHUB_MIRROR" = "true" ]
+  then
+    raw_url='raw.githubusercontents.com'
+  fi
+  while ! curl -o "$local_path/$name" https://"$raw_url"/"$REPO"/teslausb/"$BRANCH"/"$remote_path"/"$name"
+  do
+    setup_progress "get_script $remote_path failed, retrying"
+    sleep 3
+  done
+  chmod +x "$local_path/$name"
+}
 
 # Build Res body
-res_body() {
+function res_body() {
   code=$1
   data=$2
   msg=$3

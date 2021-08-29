@@ -57,6 +57,7 @@ service.interceptors.response.use(
   error => {
     if (error.request.status === 401) {
       Cookies.remove("X-Token");
+      // window.location.reload();
     }
     console.error(error) // for debug
     return Promise.reject(error)

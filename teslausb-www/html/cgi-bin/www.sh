@@ -296,6 +296,11 @@ check_token() {
   fi
 }
 
+get_value_from_token() {
+  field=$1
+  echo "${_TOKEN["$field"]}"
+}
+
 gen_auth_token() {
   exp_seconds=${2:-$TOKEN_EXPIRE_SECONDS}
   cur=$(date +%s)

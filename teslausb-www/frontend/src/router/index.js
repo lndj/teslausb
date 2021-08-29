@@ -26,6 +26,11 @@ const routes = [
     component: () => import('../views/Setup.vue')
   },
   {
+    path: '/account',
+    name: 'Account',
+    component: () => import('../views/Account.vue')
+  },
+  {
     path: '/about',
     name: 'About',
     // route level code-splitting
@@ -37,7 +42,7 @@ const routes = [
 
 const router = new VueRouter({
   routes
-})
+});
 
 router.beforeEach((to, from, next) => {
   const authToken = Cookies.get('X-Token')
@@ -55,6 +60,6 @@ router.beforeEach((to, from, next) => {
       next('/login');
     }
   }
-})
+});
 
-export default router
+export default router;

@@ -1,9 +1,8 @@
 #!/bin/bash
 
 SHELL_FOLDER=$(dirname "$(readlink -f "$0")")
-# shellcheck source=/dev/null
+source "$SHELL_FOLDER/env.sh"
 source "$SHELL_FOLDER/www.sh"
-# shellcheck source=/dev/null
 source "$SHELL_FOLDER/util.sh"
 
 username=${_POST['username']}
@@ -16,7 +15,7 @@ fi
 
 # Check username & password
 # todo db file path
-rows=$(sqlite3 /var/www/teslausb.db -csv "select id,password,nickname,icon,status from user_info where username='$username' limit 1;")
+rows=$(sqlite3 "$DB_FILE_PATH" -csv "select id,password,nickname,icon,status from user_info where username='$username' limit 1;")
 db_password=$(echo "$rows" | awk -F ',' '{print $2}')
 if [[ $db_password != "$password" ]]; then
   res=$(res_body "$LOGIN_ERROR" "{}" "password is error")

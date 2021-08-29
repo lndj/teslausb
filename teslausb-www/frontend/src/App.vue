@@ -79,6 +79,7 @@ export default {
     items: [
       { title: "Dashboard", icon: "mdi-view-dashboard", uri: "/" },
       { title: "Setup", icon: "mdi-application-settings", uri: "/setup" },
+      { title: "Account", icon: "mdi-account-details", uri: "/account" },
       { title: "About", icon: "mdi-help-box", uri: "/about" },
     ],
     right: null,

@@ -740,6 +740,12 @@ function cmd_diagnose {
     sed -E 's/\o033\[0m//'
 }
 
+function set_current_version {
+  get_script /tmp current-version.sh setup/pi
+
+  /tmp/current-version.sh > /mutable/version
+}
+
 export -f setup_progress
 
 INSTALL_DIR=${INSTALL_DIR:-/root/bin}
@@ -896,6 +902,8 @@ headless_setup_mark_setup_success
 
 # Flash for stage 5 headless (Mark success, FS readonly)
 headless_setup_progress_flash 5
+
+set_current_version
 
 setup_progress "All done."
 

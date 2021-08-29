@@ -49,7 +49,7 @@ function get_script () {
   fi
   while ! curl -o "$local_path/$name" https://"$raw_url"/"$REPO"/teslausb/"$BRANCH"/"$remote_path"/"$name"
   do
-    setup_progress "get_script failed, retrying"
+    setup_progress "get_script [$remote_path] failed, retrying"
     sleep 3
   done
   chmod +x "$local_path/$name"
