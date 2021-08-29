@@ -108,7 +108,7 @@ function check_setup_teslausb () {
   then
     setup_progress "setup-teslausb is outdated, attempting update"
     raw_url='raw.githubusercontent.com'
-    GITHUB_RAW_MIRROR=${GITHUB_RAW_MIRROR:}
+    GITHUB_RAW_MIRROR=${GITHUB_RAW_MIRROR:-}
     if [ -n "$GITHUB_RAW_MIRROR" ]
     then
       raw_url="$GITHUB_RAW_MIRROR"

@@ -264,7 +264,7 @@ function get_script () {
       (
         cd "$SOURCE_DIR"
         github_url='github.com'
-        GITHUB_COM_MIRROR=${GITHUB_COM_MIRROR:}
+        GITHUB_COM_MIRROR=${GITHUB_COM_MIRROR:-}
         if [ -n "$GITHUB_COM_MIRROR" ]
         then
           github_url="$GITHUB_COM_MIRROR"
@@ -428,7 +428,7 @@ function set_timezone () {
     elif [ "$TIME_ZONE" = "auto" ]
     then
       raw_url='raw.githubusercontent.com'
-      GITHUB_RAW_MIRROR=${GITHUB_RAW_MIRROR:}
+      GITHUB_RAW_MIRROR=${GITHUB_RAW_MIRROR:-}
       if [ -n "$GITHUB_RAW_MIRROR" ]
       then
         raw_url="$GITHUB_RAW_MIRROR"

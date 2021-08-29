@@ -55,8 +55,8 @@ export default {
   name: "FilesysState",
   computed: {},
   data: () => ({
-    camSize: "",
-    musicSize: "",
+    camSize: "0GB",
+    musicSize: "0GB",
     os: null,
     hardware: null,
   }),

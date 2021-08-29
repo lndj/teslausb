@@ -16,7 +16,7 @@ function get_script () {
   REPO=$(get_config_field "REPO")
 
   raw_url='raw.githubusercontent.com'
-  GITHUB_RAW_MIRROR=${GITHUB_RAW_MIRROR:}
+  GITHUB_RAW_MIRROR=${GITHUB_RAW_MIRROR:-}
   if [ -n "$GITHUB_RAW_MIRROR" ]
   then
     raw_url="$GITHUB_RAW_MIRROR"

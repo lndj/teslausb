@@ -81,7 +81,7 @@ function check_rsync {
 
   log_progress "default rsync doesn't work, installing prebuilt 3.2.3"
   github_url='github.com'
-  GITHUB_COM_MIRROR=${GITHUB_COM_MIRROR:}
+  GITHUB_COM_MIRROR=${GITHUB_COM_MIRROR:-}
   if [ -n "$GITHUB_COM_MIRROR" ]
   then
     github_url="$GITHUB_COM_MIRROR"

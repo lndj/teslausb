@@ -42,10 +42,10 @@ function get_script () {
   local remote_path="${3:-}"
 
   raw_url='raw.githubusercontent.com'
-  USE_GITHUB_MIRROR=${USE_GITHUB_MIRROR:-true}
-  if [ "$USE_GITHUB_MIRROR" = "true" ]
+  GITHUB_RAW_MIRROR=${GITHUB_RAW_MIRROR:-}
+  if [ -n "$GITHUB_RAW_MIRROR" ]
   then
-    raw_url='raw.githubusercontents.com'
+    raw_url="$GITHUB_RAW_MIRROR"
   fi
   while ! curl -o "$local_path/$name" https://"$raw_url"/"$REPO"/teslausb/"$BRANCH"/"$remote_path"/"$name"
   do
