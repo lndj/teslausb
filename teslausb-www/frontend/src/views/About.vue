@@ -189,7 +189,6 @@ export default {
           }
         })
         .catch((err) => {
-          this.currentVersion = '1.1.1';
           this.$snackbar({
             content: "获取当前版本出错：" + err.message,
             top: true,
@@ -221,7 +220,6 @@ export default {
         })
         .catch((err) => {
           this.checking = false;
-          this.newVersion = '1.1.2';
           this.$snackbar({
             content: "获取新版本出错：" + err.message,
             top: true,

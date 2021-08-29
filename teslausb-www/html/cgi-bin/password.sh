@@ -27,6 +27,6 @@ if [[ $db_password != "$pre_pass" ]]; then
   exit 0
 fi
 
-sqlite3 "$DB_FILE_PATH" "update user_info set password='$new_pass' where username='$username';"
+sudo /usr/bin/sqlite3 "$DB_FILE_PATH" "update user_info set password='$new_pass' where username='$username';"
 
 response_json_with_msg "$OK" "Change password success"

@@ -6,7 +6,7 @@
 export CONFIG_FILE=/root/teslausb_setup_variables.conf
 
 # Sqlite DB file path
-export DB_FILE_PATH=/var/www/teslausb.db
+export DB_FILE_PATH=/mutable/teslausb.db
 
 # Rclone config
 export RCLONE_CONFIG_FILE=/root/.config/rclone/rclone.conf

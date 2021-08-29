@@ -35,6 +35,7 @@
             ></v-text-field>
             <v-btn
               :disabled="!valid"
+              :loading="passwordLoading"
               color="success"
               class="mr-4"
               @click="submit"
@@ -63,6 +64,7 @@ export default {
     },
   },
   data: () => ({
+    passwordLoading: false,
     valid: null,
     form: {
       requiredRules: [
@@ -77,6 +79,7 @@ export default {
   }),
   methods: {
     submit() {
+      this.passwordLoading = true;
       request({
         url: "/cgi-bin/password.sh",
         method: "post",
@@ -86,6 +89,7 @@ export default {
         },
       })
         .then((res) => {
+          this.passwordLoading = false;
           if (res.code === 0) {
             this.$snackbar({
               content: "修改密码成功",
@@ -95,7 +99,7 @@ export default {
           }
         })
         .catch((err) => {
-          this.$emit("setLoading", false);
+          this.passwordLoading = false;
           this.$snackbar({
             content: "修改失败：" + err.message,
             centered: true,

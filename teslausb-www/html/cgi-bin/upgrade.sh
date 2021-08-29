@@ -25,7 +25,7 @@ fi
 
 # Get new version
 if [[ $type == '2' ]]; then
-  get_script /tmp current-version.sh setup/pi
+  get_script /tmp current-version.sh setup/pi > /dev/null
   new_version=$(/tmp/current-version.sh)
   res_data=$(cat <<EOF
   {

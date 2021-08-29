@@ -11,6 +11,10 @@ function get_script () {
   local name="$2"
   local remote_path="${3:-}"
 
+  USE_GITHUB_MIRROR=$(get_config_field "USE_GITHUB_MIRROR")
+  BRANCH=$(get_config_field "BRANCH")
+  REPO=$(get_config_field "REPO")
+
   raw_url='raw.githubusercontent.com'
   USE_GITHUB_MIRROR=${USE_GITHUB_MIRROR:-true}
   if [ "$USE_GITHUB_MIRROR" = "true" ]
@@ -19,7 +23,6 @@ function get_script () {
   fi
   while ! curl -o "$local_path/$name" https://"$raw_url"/"$REPO"/teslausb/"$BRANCH"/"$remote_path"/"$name"
   do
-    setup_progress "get_script $remote_path failed, retrying"
     sleep 3
   done
   chmod +x "$local_path/$name"
