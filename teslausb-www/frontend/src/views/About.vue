@@ -229,6 +229,8 @@ export default {
         });
     },
     upgrade() {
+      this.confirmUpgradeDialog = false;
+
       this.upgradeProcess = true;
       request({
         url: "/cgi-bin/upgrade.sh",
@@ -239,7 +241,6 @@ export default {
       })
         .then((res) => {
           this.upgradeProcess = false;
-          this.confirmUpgradeDialog = false;
           if (res.code === 0) {
             this.newVersion = res.data.new_version;
           } else {
@@ -252,7 +253,6 @@ export default {
         })
         .catch((err) => {
           this.upgradeProcess = false;
-          this.confirmUpgradeDialog = false;
           this.$snackbar({
             content: "升级出错：" + err.message,
             top: true,
