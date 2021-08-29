@@ -41,7 +41,7 @@ fi
 
 # Upgrade
 if [[ $type == '3' ]]; then
-  sudo /root/bin/setup-teslausb upgrade
+  sudo /root/bin/setup-teslausb upgrade | sudo tee -a /tmp/upgrade.log 2>&1 &
   response_json_with_msg "$OK" "Upgrade success"
   exit 0
 fi
