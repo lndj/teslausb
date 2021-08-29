@@ -108,10 +108,10 @@ function check_setup_teslausb () {
   then
     setup_progress "setup-teslausb is outdated, attempting update"
     raw_url='raw.githubusercontent.com'
-    USE_GITHUB_MIRROR=${USE_GITHUB_MIRROR:-true}
-    if [ "$USE_GITHUB_MIRROR" = "true" ]
+    GITHUB_RAW_MIRROR=${GITHUB_RAW_MIRROR:}
+    if [ -n "$GITHUB_RAW_MIRROR" ]
     then
-      raw_url='raw.githubusercontents.com'
+      raw_url="$GITHUB_RAW_MIRROR"
     fi
     if curl --fail -s -o /root/bin/setup-teslausb.new https://"$raw_url"/marcone/teslausb/main-dev/setup/pi/setup-teslausb
     then

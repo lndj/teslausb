@@ -245,4 +245,9 @@ export WIFIPASS='your_pass'
 
 # Uncomment this to disable use github mirror
 # Mirror: raw.githubusercontents.com
-# export USE_GITHUB_MIRROR=false
+# or raw.fastgit.org
+# export GITHUB_RAW_MIRROR=raw.githubusercontents.com
+
+# Uncomment this to disable use github mirror
+# Mirror: github.com
+# export GITHUB_COM_MIRROR=hub.fastgit.org

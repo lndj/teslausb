@@ -96,7 +96,7 @@ def _rest_request(url, method=None, data=None):
         data = {}
     headers = {
       'Authorization': 'Bearer {}'.format(_get_api_token()),
-      'User-Agent': 'github.com/marcone/teslausb',
+      'User-Agent': 'github.com/lndj/teslausb',
     }
 
     _log("Sending {} Request: {}; Data: {}".format(method, url, data))
@@ -353,7 +353,7 @@ def streaming_ping():
     wake_up_vehicle()
 
     headers = {
-      'User-Agent': 'github.com/marcone/teslausb',
+      'User-Agent': 'github.com/lndj/teslausb',
       'Authorization': 'Bearer {}'.format(_get_api_token()),
       'Connection': 'Upgrade',
       'Upgrade': 'websocket',

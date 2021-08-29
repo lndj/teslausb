@@ -80,7 +80,13 @@ function check_rsync {
   fi
 
   log_progress "default rsync doesn't work, installing prebuilt 3.2.3"
-  if curl -L --fail -o /usr/local/bin/rsync https://github.com/marcone/rsync/releases/download/v3.2.3-rpi/rsync
+  github_url='github.com'
+  GITHUB_COM_MIRROR=${GITHUB_COM_MIRROR:}
+  if [ -n "$GITHUB_COM_MIRROR" ]
+  then
+    github_url="$GITHUB_COM_MIRROR"
+  fi
+  if curl -L --fail -o /usr/local/bin/rsync https://"$github_url"/marcone/rsync/releases/download/v3.2.3-rpi/rsync
   then
     chmod a+x /usr/local/bin/rsync
     apt install -y libxxhash0
