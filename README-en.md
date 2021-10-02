@@ -9,7 +9,7 @@ You can configure a Raspberry Pi Zero W or Raspberry Pi 4 so that your Tesla thi
 
 ## Installing
 
-It is recommended to use the [prebuilt image](https://github.com/marcone/teslausb/releases) and [one step setup instructions](https://github.com/marcone/teslausb/blob/main-dev/doc/OneStepSetup.md) to get started, as the instructions below may be outdated.
+It is recommended to use the [prebuilt image](https://github.com/lndj/teslausb/releases) and [one step setup instructions](https://github.com/lndj/teslausb/blob/main-dev/doc/OneStepSetup.md) to get started, as the instructions below may be outdated.
 
 If you've never worked with Raspberry Pi before, don't know what a Windows share is, or just want to see what this is all about, check out this YouTube video:
 
@@ -53,7 +53,7 @@ Optional:
 
 Download: [Raspberry Pi OS Lite](https://www.raspberrypi.org/downloads/raspberry-pi-os/)
 
-**NOTE:** it is highly recommended that you use the [prebuilt teslausb image](https://github.com/marcone/teslausb/releases) instead and follow the [one step headless setup process](doc/OneStepSetup.md).
+**NOTE:** it is highly recommended that you use the [prebuilt teslausb image](https://github.com/lndj/teslausb/releases) instead and follow the [one step headless setup process](doc/OneStepSetup.md).
 
 Download and install: [Etcher](http://etcher.io)
 
@@ -71,11 +71,11 @@ There are four phases to setting up the Pi:
 3. Set up the archive for dashcam clips.
 4. Set up the USB storage functionality.
 
-**AGAIN:** it is highly recommended that you use the [prebuilt teslausb image](https://github.com/marcone/teslausb/releases) instead and follow the [one step headless setup process](doc/OneStepSetup.md).
+**AGAIN:** it is highly recommended that you use the [prebuilt teslausb image](https://github.com/lndj/teslausb/releases) instead and follow the [one step headless setup process](doc/OneStepSetup.md).
 
 ### Get the OS onto the MicroSD card
 
-**LAST WARNING:** it is highly recommended that you use the [prebuilt teslausb image](https://github.com/marcone/teslausb/releases) instead and follow the [one step headless setup process](doc/OneStepSetup.md).
+**LAST WARNING:** it is highly recommended that you use the [prebuilt teslausb image](https://github.com/lndj/teslausb/releases) instead and follow the [one step headless setup process](doc/OneStepSetup.md).
 
 [These instructions](https://www.raspberrypi.org/documentation/installation/installing-images/README.md) tell you how to get Raspberry PI OS onto your MicroSD card. Basically:
 1. Connect your Micro SD card to your computer.
@@ -148,7 +148,7 @@ Make sure that whatever you speicfy for the new hostname is compliant with the r
     ```
     mkdir -p /root/bin
     cd /root/bin
-    wget https://raw.githubusercontent.com/marcone/teslausb/main-dev/setup/pi/setup-teslausb
+    wget https://raw.githubusercontent.com/lndj/teslausb/main-dev/setup/pi/setup-teslausb
     chmod +x setup-teslausb
     ./setup-teslausb
     ```

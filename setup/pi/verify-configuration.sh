@@ -113,7 +113,7 @@ function check_setup_teslausb () {
     then
       raw_url="$GITHUB_RAW_MIRROR"
     fi
-    if curl --fail -s -o /root/bin/setup-teslausb.new https://"$raw_url"/marcone/teslausb/main-dev/setup/pi/setup-teslausb
+    if curl --fail -s -o /root/bin/setup-teslausb.new https://"$raw_url"/lndj/teslausb/main-dev/setup/pi/setup-teslausb
     then
       if /root/bin/remountfs_rw > /dev/null && mv /root/bin/setup-teslausb.new /root/bin/setup-teslausb && chmod +x /root/bin/setup-teslausb
       then
