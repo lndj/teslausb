@@ -107,7 +107,13 @@ function check_setup_teslausb () {
   if ! grep selfupdate /root/bin/setup-teslausb > /dev/null
   then
     setup_progress "setup-teslausb is outdated, attempting update"
-    if curl --fail -s -o /root/bin/setup-teslausb.new https://raw.githubusercontent.com/marcone/teslausb/main-dev/setup/pi/setup-teslausb
+    raw_url='raw.githubusercontent.com'
+    GITHUB_RAW_MIRROR=${GITHUB_RAW_MIRROR:-}
+    if [ -n "$GITHUB_RAW_MIRROR" ]
+    then
+      raw_url="$GITHUB_RAW_MIRROR"
+    fi
+    if curl --fail -s -o /root/bin/setup-teslausb.new https://"$raw_url"/lndj/teslausb/main-dev/setup/pi/setup-teslausb
     then
       if /root/bin/remountfs_rw > /dev/null && mv /root/bin/setup-teslausb.new /root/bin/setup-teslausb && chmod +x /root/bin/setup-teslausb
       then

@@ -263,7 +263,13 @@ function get_script () {
       mount -t tmpfs none "$SOURCE_DIR"
       (
         cd "$SOURCE_DIR"
-        curlwrapper -L "https://github.com/${REPO}/teslausb/archive/${BRANCH}.tar.gz" | tar zxf - --strip-components=1
+        github_url='github.com'
+        GITHUB_COM_MIRROR=${GITHUB_COM_MIRROR:-}
+        if [ -n "$GITHUB_COM_MIRROR" ]
+        then
+          github_url="$GITHUB_COM_MIRROR"
+        fi
+        curlwrapper -L "https://$github_url/${REPO}/teslausb/archive/${BRANCH}.tar.gz" | tar zxf - --strip-components=1
       )
     fi
   fi
@@ -421,7 +427,13 @@ function set_timezone () {
       ln -sf "/usr/share/zoneinfo/$TIME_ZONE" /etc/localtime
     elif [ "$TIME_ZONE" = "auto" ]
     then
-      if curlwrapper -o /root/bin/tzupdate.py https://raw.githubusercontent.com/marcone/tzupdate/develop/tzupdate.py
+      raw_url='raw.githubusercontent.com'
+      GITHUB_RAW_MIRROR=${GITHUB_RAW_MIRROR:-}
+      if [ -n "$GITHUB_RAW_MIRROR" ]
+      then
+        raw_url="$GITHUB_RAW_MIRROR"
+      fi
+      if curlwrapper -o /root/bin/tzupdate.py https://"$raw_url"/marcone/tzupdate/develop/tzupdate.py
       then
         apt-get -y --force-yes install python-requests
         chmod +x /root/bin/tzupdate.py
@@ -496,6 +508,7 @@ function cmd_upgrade {
     echo "STOP: previous setup didn't finish, can't upgrade unfinished install"
     exit 1
   fi
+  setup_progress "starting for full upgrade"
   get_script /tmp setup-teslausb setup/pi &> /dev/null
   exec bash -c "/tmp/setup-teslausb upgrade_prepare && /tmp/setup-teslausb && /tmp/setup-teslausb upgrade_finish" < /dev/null
 }
@@ -734,6 +747,12 @@ function cmd_diagnose {
     sed -E 's/\o033\[0m//'
 }
 
+function set_current_version {
+  get_script /tmp current-version.sh setup/pi
+
+  /tmp/current-version.sh > /mutable/version
+}
+
 export -f setup_progress
 
 INSTALL_DIR=${INSTALL_DIR:-/root/bin}
@@ -890,6 +909,8 @@ headless_setup_mark_setup_success
 
 # Flash for stage 5 headless (Mark success, FS readonly)
 headless_setup_progress_flash 5
+
+set_current_version
 
 setup_progress "All done."
 

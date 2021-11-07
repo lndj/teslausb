@@ -13,7 +13,8 @@ mkdir -p /var/lib/nginx
 mount /var/log/nginx
 mount /var/lib/nginx
 
-apt-get -y --force-yes install nginx fcgiwrap libnginx-mod-http-fancyindex libfuse-dev
+# replace --force-yes
+apt-get -y --allow-downgrades --allow-remove-essential --allow-unauthenticated install nginx fcgiwrap libnginx-mod-http-fancyindex libfuse-dev
 
 # install data files and config files
 systemctl stop nginx.service &> /dev/null || true
@@ -27,6 +28,14 @@ ln -s /tmp/diagnostics.txt /var/www/html/
 mkdir /var/www/html/TeslaCam
 cp -rf "$SOURCE_DIR/teslausb-www/teslausb.nginx" /etc/nginx/sites-available
 ln -sf /etc/nginx/sites-available/teslausb.nginx /etc/nginx/sites-enabled/default
+
+# install the new admin frontend
+tar -zxvf "$SOURCE_DIR/teslausb-www/frontend/dist.tar.gz"
+mv dist/ /var/www/html
+
+# init the admin user
+chmod +x /var/www/html/cgi-bin/init.sh
+/var/www/html/cgi-bin/init.sh
 
 # install the fuse layer needed to work around an incompatibility
 # between Chrome and Tesla's recordings

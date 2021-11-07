@@ -10,10 +10,10 @@ This is a streamlined process for setting up the Pi. You'll flash a preconfigure
 
 ## Configure the SD card before first boot of the Pi
 
-1. Flash the [latest image release](https://github.com/marcone/teslausb/releases) using Etcher or similar.
+1. Flash the [latest image release](https://github.com/lndj/teslausb/releases) using Etcher or similar.
 
-1. Mount the card again, and in the `boot` directory create a `teslausb_setup_variables.conf` file to export the same environment variables normally needed for manual setup (including archive info, Wifi, and push notifications (if desired).
-A sample conf file is located in the `boot` folder on the SD card. The latest sample is also available from GitHub via [pi-gen-sources/00-teslausb-tweaks/files/teslausb_setup_variables.conf.sample](https://github.com/marcone/teslausb/blob/main-dev/pi-gen-sources/00-teslausb-tweaks/files/teslausb_setup_variables.conf.sample).
+2. Mount the card again, and in the `boot` directory create a `teslausb_setup_variables.conf` file to export the same environment variables normally needed for manual setup (including archive info, Wifi, and push notifications (if desired).
+A sample conf file is located in the `boot` folder on the SD card. The latest sample is also available from GitHub via [pi-gen-sources/00-teslausb-tweaks/files/teslausb_setup_variables.conf.sample](https://github.com/lndj/teslausb/blob/main-dev/pi-gen-sources/00-teslausb-tweaks/files/teslausb_setup_variables.conf.sample).
 The sample file contains documentation and suggestions for values.
 **NOTE:** when creating/editing the configuration file on Windows, ensure that it is saved with the correct extension. It is recommended to disable the "hide extensions for known file types" option in Windows so you can see the full file name.
 
@@ -75,7 +75,7 @@ You should see in `/boot` the `TESLAUSB_SETUP_FINISHED` and `WIFI_ENABLED` files
   * If all else fails, copy `/boot/wpa_supplicant.conf.sample` to `/boot/wpa_supplicant.conf` and edit out the `TEMP` variables to your desired settings.
 * Note: if you get an error about `read-only filesystem`, you may have to `sudo -i` and run `/root/bin/remountfs_rw`.
 
-More troubleshooting information in the [wiki](https://github.com/marcone/teslausb/wiki/Troubleshooting)
+More troubleshooting information in the [wiki](https://github.com/lndj/teslausb/wiki/Troubleshooting)
 
 # Background information
 ## What happens under the covers
@@ -93,4 +93,4 @@ At this point the next boot should start the Dashcam/music drives like normal. I
 
 # Image modification sources
 
-The sources for the image modifications, and instructions, are in the [pi-gen-sources folder](https://github.com/marcone/teslausb/tree/main-dev/pi-gen-sources).
+The sources for the image modifications, and instructions, are in the [pi-gen-sources folder](https://github.com/lndj/teslausb/tree/main-dev/pi-gen-sources).

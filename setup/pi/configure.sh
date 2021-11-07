@@ -80,7 +80,13 @@ function check_rsync {
   fi
 
   log_progress "default rsync doesn't work, installing prebuilt 3.2.3"
-  if curl -L --fail -o /usr/local/bin/rsync https://github.com/marcone/rsync/releases/download/v3.2.3-rpi/rsync
+  github_url='github.com'
+  GITHUB_COM_MIRROR=${GITHUB_COM_MIRROR:-}
+  if [ -n "$GITHUB_COM_MIRROR" ]
+  then
+    github_url="$GITHUB_COM_MIRROR"
+  fi
+  if curl -L --fail -o /usr/local/bin/rsync https://"$github_url"/marcone/rsync/releases/download/v3.2.3-rpi/rsync
   then
     chmod a+x /usr/local/bin/rsync
     apt install -y libxxhash0
@@ -93,6 +99,18 @@ function check_rsync {
 
   log_progress "STOP: rsync doesn't work correctly"
   exit 1
+}
+
+function check_rclone {
+  rclone_version=$(rclone --version 2>>errors | head -n 1)
+  if [[ -n $rclone_version ]]; then
+    log_progress "rclone has installed"
+    return 0
+  fi
+
+  log_progress "rclone doesn't work, installing"
+  get_script /tmp configure-rclone.sh setup/pi
+  /tmp/configure-rclone.sh
 }
 
 function check_archive_configs () {
@@ -108,8 +126,9 @@ function check_archive_configs () {
             ;;
         rclone)
             check_variable "RCLONE_DRIVE"
-            check_variable "RCLONE_PATH"
+            # check_variable "RCLONE_PATH"
             export ARCHIVE_SERVER="8.8.8.8" # since it's a cloud hosted drive we'll just set this to google dns
+            check_rclone
             ;;
         cifs)
             check_variable "SHARE_NAME"

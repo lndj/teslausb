@@ -8,6 +8,11 @@ server {
 
     server_name _;
 
+    location /v2/ {
+        alias /var/www/html/dist/;
+        try_files $uri $uri/ /index.html;
+    }
+
     location / {
         try_files $uri $uri/ =404;
     }

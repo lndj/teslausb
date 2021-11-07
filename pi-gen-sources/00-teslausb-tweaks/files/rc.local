@@ -30,7 +30,10 @@ function setup_progress () {
 function set_domain_hosts {
   domain=$1
   setup_progress "Configuring DNS for $1"
+  sed -i "/$domain/d" /etc/hosts
   dig +time=2 +retry=1 +tries=2 "$domain" @8.8.8.8 | grep "^$domain" | awk '{print $5, $1}' | sed 's/.$//g' >> /etc/hosts
+  hosts=$(cat /etc/hosts)
+  setup_progress "Current hosts: $hosts"
 }
 
 function get_script () {
@@ -38,9 +41,15 @@ function get_script () {
   local name="$2"
   local remote_path="${3:-}"
 
-  while ! curl -o "$local_path/$name" https://raw.githubusercontent.com/"$REPO"/teslausb/"$BRANCH"/"$remote_path"/"$name"
+  raw_url='raw.githubusercontent.com'
+  GITHUB_RAW_MIRROR=${GITHUB_RAW_MIRROR:-}
+  if [ -n "$GITHUB_RAW_MIRROR" ]
+  then
+    raw_url="$GITHUB_RAW_MIRROR"
+  fi
+  while ! curl -o "$local_path/$name" https://"$raw_url"/"$REPO"/teslausb/"$BRANCH"/"$remote_path"/"$name"
   do
-    setup_progress "get_script failed, retrying"
+    setup_progress "get_script [$remote_path] failed, retrying"
     sleep 3
   done
   chmod +x "$local_path/$name"
@@ -91,6 +100,7 @@ then
   mv /boot/teslausb_setup_variables.conf /root/
   dos2unix /root/teslausb_setup_variables.conf
 fi
+
 if [ -e "/root/teslausb_setup_variables.conf" ]
 then
   source "/root/teslausb_setup_variables.conf"
@@ -104,6 +114,14 @@ fi
 # check if we previously marked wifi as enabled
 enable_wifi
 # Good to start setup at this point
+
+# If use fix DNS, set it
+FIX_DNS_CACHE_POISONING=${FIX_DNS_CACHE_POISONING:-true}
+if [ "$FIX_DNS_CACHE_POISONING" = "true" ]
+then
+  set_domain_hosts "raw.githubusercontent.com"
+  set_domain_hosts "github.com"
+fi
 
 # This begins the Headless Setup loop
 # If the FINISHED file does not exist then we start setup. Otherwise passes on to normal loop
@@ -140,14 +158,6 @@ then
   then
     REPO=${REPO:-lndj}
     BRANCH=${BRANCH:-main-dev}
-
-    # If use fix DNS, set it
-    FIX_DNS_CACHE_POISONING=${FIX_DNS_CACHE_POISONING:-true}
-    if [ "$FIX_DNS_CACHE_POISONING" = "true" ]
-    then
-      set_domain_hosts "raw.githubusercontent.com"
-      set_domain_hosts "github.com"
-    fi
 
     # Script doesn't exist, grab it.
     setup_progress "Grabbing main setup file."

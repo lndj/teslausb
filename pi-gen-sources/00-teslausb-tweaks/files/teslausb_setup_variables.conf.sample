@@ -6,7 +6,7 @@
 # to "teslausb_setup_variables.conf" and place it in the "boot" folder of your
 # SD card.
 # Please check the latest version of this file at:
-# https://github.com/marcone/teslausb/blob/main-dev/pi-gen-sources/00-teslausb-tweaks/files/teslausb_setup_variables.conf.sample
+# https://github.com/lndj/teslausb/blob/main-dev/pi-gen-sources/00-teslausb-tweaks/files/teslausb_setup_variables.conf.sample
 #
 ######################################################################
 
@@ -242,3 +242,12 @@ export WIFIPASS='your_pass'
 
 # Fix dns error in China when getting script from github
 # export FIX_DNS_CACHE_POISONING=true
+
+# Uncomment this to disable use github mirror
+# Mirror: raw.githubusercontents.com
+# or raw.fastgit.org
+# export GITHUB_RAW_MIRROR=raw.githubusercontents.com
+
+# Uncomment this to disable use github mirror
+# Mirror: github.com
+# export GITHUB_COM_MIRROR=hub.fastgit.org
